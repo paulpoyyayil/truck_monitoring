@@ -1,0 +1,86 @@
+class DriverRegistrationModel {
+  DriverRegistrationData? data;
+  String? message;
+  bool? success;
+
+  DriverRegistrationModel({this.data, this.message, this.success});
+
+  DriverRegistrationModel.fromJson(Map<String, dynamic> json) {
+    data = json['data'] != null
+        ? DriverRegistrationData.fromJson(json['data'])
+        : null;
+    message = json['message'];
+    success = json['success'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (this.data != null) {
+      data['data'] = this.data!.toJson();
+    }
+    data['message'] = message;
+    data['success'] = success;
+    return data;
+  }
+}
+
+class DriverRegistrationData {
+  int? id;
+  String? name;
+  String? email;
+  String? mobile;
+  String? location;
+  String? vehicleStatus;
+  String? licenceNo;
+  String? role;
+  String? status;
+  String? transportFrom;
+  String? transportTo;
+  int? loginId;
+
+  DriverRegistrationData(
+      {this.id,
+      this.name,
+      this.email,
+      this.mobile,
+      this.location,
+      this.vehicleStatus,
+      this.licenceNo,
+      this.role,
+      this.status,
+      this.transportFrom,
+      this.transportTo,
+      this.loginId});
+
+  DriverRegistrationData.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    email = json['email'];
+    mobile = json['mobile'];
+    location = json['location'];
+    vehicleStatus = json['vehicle_status'];
+    licenceNo = json['licence_no'];
+    role = json['role'];
+    status = json['status'];
+    transportFrom = json['transport_from'];
+    transportTo = json['transport_to'];
+    loginId = json['login_id'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['email'] = email;
+    data['mobile'] = mobile;
+    data['location'] = location;
+    data['vehicle_status'] = vehicleStatus;
+    data['licence_no'] = licenceNo;
+    data['role'] = role;
+    data['status'] = status;
+    data['transport_from'] = transportFrom;
+    data['transport_to'] = transportTo;
+    data['login_id'] = loginId;
+    return data;
+  }
+}
