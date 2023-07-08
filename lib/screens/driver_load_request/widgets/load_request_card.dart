@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:recase/recase.dart';
 import 'package:truck_monitor/config/colors.dart';
 import 'package:truck_monitor/screens/driver_load_request/widgets/custom_button.dart';
 import 'package:truck_monitor/widgets/separated_row_text.dart';
 
 class LoadRequestCard extends StatefulWidget {
-  const LoadRequestCard({super.key});
+  const LoadRequestCard(
+      {super.key,
+      required this.customerName,
+      required this.description,
+      required this.from,
+      required this.to,
+      required this.quantity});
+  final String customerName, description, from, to, quantity;
 
   @override
   State<LoadRequestCard> createState() => _LoadRequestCardState();
@@ -44,13 +52,13 @@ class _LoadRequestCardState extends State<LoadRequestCard> {
           ),
           child: Column(
             children: [
-              SeparatedRowText(title: 'Name', text: 'Varun'),
-              SeparatedRowText(title: 'Address', text: 'Kozhikode'),
-              SeparatedRowText(title: 'From', text: 'Kozhikode'),
-              SeparatedRowText(title: 'To', text: 'Chennai'),
-              SeparatedRowText(title: 'Mobile', text: '9898656532'),
-              SeparatedRowText(title: 'Additional Mobile', text: '9898656532'),
-              SeparatedRowText(title: 'Item', text: 'Rice'),
+              SeparatedRowText(
+                  title: 'Name', text: widget.customerName.titleCase),
+              SeparatedRowText(
+                  title: 'Description', text: widget.description.titleCase),
+              SeparatedRowText(title: 'From', text: widget.from.toUpperCase()),
+              SeparatedRowText(title: 'To', text: widget.to.toUpperCase()),
+              SeparatedRowText(title: 'Quantity', text: widget.quantity),
             ],
           ),
         ),

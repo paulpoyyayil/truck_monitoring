@@ -24,4 +24,5 @@ class ApiConstants {
   static const driverSendChat = 'api/driver_update_chat';
   static const allUserChats = 'api/user_view_chat';
   static const allDriverChats = 'api/driver_view_chat';
+  static const allLoads = 'api/all_load';
 }
