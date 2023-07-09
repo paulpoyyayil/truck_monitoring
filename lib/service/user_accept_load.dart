@@ -3,10 +3,10 @@ import 'package:http/http.dart' as http;
 import 'package:truck_monitor/config/constants.dart';
 import 'package:truck_monitor/config/network_exceptions.dart';
 
-Future<bool> driverAcceptBooking(
-    {required BuildContext context, required String bookingId}) async {
+Future<bool> userAcceptLoad(
+    {required BuildContext context, required String loadId}) async {
   var url = Uri.parse(
-      '${ApiConstants.baseUrl}${ApiConstants.driverAcceptBooking}/$bookingId');
+      '${ApiConstants.baseUrl}${ApiConstants.userAcceptLoad}/$loadId');
 
   try {
     var response = await http.post(url);

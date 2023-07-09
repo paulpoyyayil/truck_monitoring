@@ -1,6 +1,6 @@
 class ApiConstants {
   static const baseUrl =
-      'https://ca4a-2405-201-f006-1-e5ac-4886-ef20-36cf.ngrok-free.app/';
+      'https://ec29-2405-201-f00a-20cc-11b-82c5-92a9-de66.ngrok-free.app/';
   static const login = 'api/login_users';
   static const registerUser = 'api/user_register';
   static const registerDriver = 'api/driver_register';
@@ -25,4 +25,7 @@ class ApiConstants {
   static const allUserChats = 'api/user_view_chat';
   static const allDriverChats = 'api/driver_view_chat';
   static const allLoads = 'api/all_load';
+  static const driverRequestLoad = 'api/driver_request_for_load';
+  static const userViewLoads = 'api/user_view_load_request';
+  static const userAcceptLoad = 'api/user_accept_request';
 }

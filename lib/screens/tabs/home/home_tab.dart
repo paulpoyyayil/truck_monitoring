@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:remixicon/remixicon.dart';
+import 'package:truck_monitor/config/colors.dart';
 import 'package:truck_monitor/data.dart';
+import 'package:truck_monitor/screens/truck_stop/truck_stop.dart';
 import 'package:truck_monitor/screens/add_vehicle/add_vehicle.dart';
 import 'package:truck_monitor/screens/book_truck/book_truck.dart';
 import 'package:truck_monitor/screens/driver_bookings/driver_bookings.dart';
@@ -46,7 +49,7 @@ class _HomeTabState extends State<HomeTab> {
         case 1:
           return navigationPush(context, const DriverBookings());
         case 2:
-          return navigationPush(context, const LoadRequest());
+          return navigationPush(context, const DriverLoadRequest());
         case 3:
           return navigationPush(context, const DriverMessages());
       }
@@ -61,30 +64,86 @@ class _HomeTabState extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
-      child: GridView.builder(
-        shrinkWrap: true,
-        itemCount: role == 'user' ? userWidgets.length : driverWidgets.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 18.w,
-          mainAxisSpacing: 32.h,
-          childAspectRatio: 0.9,
-        ),
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () => _onItemTapped(index),
-            child: TileWidget(
-              icon: role == 'user'
-                  ? userWidgets[index].icon
-                  : driverWidgets[index].icon,
-              label: role == 'user'
-                  ? userWidgets[index].label
-                  : driverWidgets[index].label,
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
+        child: Column(
+          children: [
+            GridView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemCount:
+                  role == 'user' ? userWidgets.length : driverWidgets.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 18.w,
+                mainAxisSpacing: 32.h,
+                childAspectRatio: 0.9,
+              ),
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () => _onItemTapped(index),
+                  child: TileWidget(
+                    icon: role == 'user'
+                        ? userWidgets[index].icon
+                        : driverWidgets[index].icon,
+                    label: role == 'user'
+                        ? userWidgets[index].label
+                        : driverWidgets[index].label,
+                  ),
+                );
+              },
             ),
-          );
-        },
+            if (role == 'user') SizedBox(height: 14.h),
+            if (role == 'user')
+              GestureDetector(
+                onTap: () => navigationPush(context, const TruckStop()),
+                child: Column(
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 12.w,
+                        vertical: 14.h,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.kCardBackground,
+                        border: Border.all(
+                          color: AppColors.kBorderColor,
+                        ),
+                        borderRadius: BorderRadius.circular(16.r),
+                        boxShadow: const [
+                          BoxShadow(
+                            offset: Offset(0, 2),
+                            spreadRadius: 0,
+                            blurRadius: 4,
+                            color: AppColors.kShadowColor,
+                          )
+                        ],
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 24.h),
+                        child: Icon(
+                          Remix.bus_line,
+                          size: 64.sp,
+                          color: AppColors.kPrimaryColor,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 8.h),
+                    Text(
+                      'Truck Stop',
+                      style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              )
+          ],
+        ),
       ),
     );
   }

@@ -1,11 +1,9 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:truck_monitor/config/constants.dart';
 import 'package:truck_monitor/config/network_exceptions.dart';
 
-Future<String> cancelBooking({
+Future<bool> cancelBooking({
   required BuildContext context,
   required String bookingId,
 }) async {
@@ -15,7 +13,7 @@ Future<String> cancelBooking({
   try {
     var response = await http.delete(url);
     if (response.statusCode == 200) {
-      return jsonDecode(response.body)['message'];
+      return true;
     } else {
       if (context.mounted) {
         handleNetworkException(response, context);

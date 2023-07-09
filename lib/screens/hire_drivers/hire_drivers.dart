@@ -39,6 +39,14 @@ class _HireDriversState extends State<HireDrivers> {
         context: context,
         endPoint: ApiConstants.driverWithVehicle,
       );
+
+      if (mounted) {
+        setState(() {});
+      }
+    } catch (e) {
+      getSnackbar(context, e.toString());
+    }
+    try {
       _withoutVehicle = await getDriverListing(
         context: context,
         endPoint: ApiConstants.driverWithoutVehicle,

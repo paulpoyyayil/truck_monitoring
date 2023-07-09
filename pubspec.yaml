@@ -25,6 +25,8 @@ dependencies:
   email_validator: ^2.1.17
   loading_animation_widget: ^1.2.0+4
   intl: ^0.18.1
+  maps_launcher: ^2.2.0
+  geocoding: ^2.1.0
 
 dev_dependencies:
   flutter_test:

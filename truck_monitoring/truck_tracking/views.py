@@ -556,6 +556,9 @@ class LoadRequestAPIView(GenericAPIView):
     serializer_class = LoadRequestSerializer
 
     def post(self, request):
+        load_from=''
+        load_to=''
+        load_quantity=' '
         users = request.data.get('user')
         drivers = request.data.get('driver')
         loads = request.data.get('load')

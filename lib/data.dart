@@ -22,7 +22,7 @@ List<TilesWidgetClass> userWidgets = [
   ),
   TilesWidgetClass(
     icon: Remix.bus_line,
-    label: 'Bookings',
+    label: 'Bookings & Loads',
   ),
   TilesWidgetClass(
     icon: Remix.secure_payment_line,

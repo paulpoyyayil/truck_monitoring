@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:truck_monitor/config/constants.dart';
@@ -32,7 +31,6 @@ Future<UserRegistrationModel> registerUser({
       body: jsonEncode(userData),
       headers: {'Content-Type': 'application/json'},
     );
-    log(response.body);
     if (response.statusCode == 201) {
       return UserRegistrationModel.fromJson(jsonDecode(response.body));
     } else {

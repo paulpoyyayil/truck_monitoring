@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:truck_monitor/config/constants.dart';
@@ -12,7 +10,6 @@ Future<DriverListModel> getDriverListing({
   required String endPoint,
 }) async {
   var url = Uri.parse('${ApiConstants.baseUrl}$endPoint');
-  log(url.toString());
   try {
     var response = await http.get(url);
 

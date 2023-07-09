@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:recase/recase.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:truck_monitor/config/colors.dart';
+import 'package:truck_monitor/screens/driver_load_request/driver_load_request.dart';
 import 'package:truck_monitor/screens/driver_load_request/widgets/custom_button.dart';
+import 'package:truck_monitor/service/driver_request_load.dart';
+import 'package:truck_monitor/utils/navigation.dart';
+import 'package:truck_monitor/utils/snackbar.dart';
 import 'package:truck_monitor/widgets/separated_row_text.dart';
+import 'package:truck_monitor/widgets/status_button.dart';
+import 'package:truck_monitor/widgets/textfield.dart';
 
 class LoadRequestCard extends StatefulWidget {
   const LoadRequestCard(
@@ -12,8 +19,9 @@ class LoadRequestCard extends StatefulWidget {
       required this.description,
       required this.from,
       required this.to,
-      required this.quantity});
-  final String customerName, description, from, to, quantity;
+      required this.quantity,
+      required this.userId});
+  final String userId, customerName, description, from, to, quantity;
 
   @override
   State<LoadRequestCard> createState() => _LoadRequestCardState();
@@ -66,24 +74,181 @@ class _LoadRequestCardState extends State<LoadRequestCard> {
           width: MediaQuery.sizeOf(context).width,
           child: CustomButton(
             onTap: () {
-              if (mounted) {
-                setState(() {
-                  isLoading = true;
-                });
-              }
-              Future.delayed(Duration(seconds: 2)).then((value) {
-                if (mounted) {
-                  setState(() {
-                    isLoading = false;
-                  });
-                }
-              });
+              showModalBottomSheet(
+                isScrollControlled: true,
+                context: context,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16.r),
+                    topRight: Radius.circular(16.r),
+                  ),
+                ),
+                builder: (context) {
+                  return RequestLoadWidget(userId: widget.userId);
+                },
+              );
             },
-            buttonText: 'Accept',
+            buttonText: 'Request Load',
             status: isLoading,
           ),
         ),
       ],
+    );
+  }
+}
+
+class RequestLoadWidget extends StatefulWidget {
+  const RequestLoadWidget({
+    super.key,
+    required this.userId,
+  });
+  final String userId;
+  @override
+  State<RequestLoadWidget> createState() => _RequestLoadWidgetState();
+}
+
+class _RequestLoadWidgetState extends State<RequestLoadWidget> {
+  TextEditingController loadFrom = TextEditingController();
+  TextEditingController loadTo = TextEditingController();
+  bool isLoading = false;
+
+  @override
+  void dispose() {
+    loadFrom.dispose();
+    loadTo.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      padding:
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: 14.w,
+          vertical: 12.h,
+        ),
+        child: Column(
+          children: [
+            Text(
+              'Request Load',
+              style: TextStyle(
+                fontSize: 18.sp,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            SizedBox(height: 22.h),
+            CustomTextField(
+              controller: loadFrom,
+              isPassword: false,
+              hintText: 'Load From',
+            ),
+            SizedBox(height: 16.h),
+            CustomTextField(
+              controller: loadTo,
+              isPassword: false,
+              hintText: 'Load To',
+            ),
+            SizedBox(height: 22.h),
+            StatusButton(
+              onTap: () async {
+                if (loadFrom.text.isEmpty || loadTo.text.isEmpty) {
+                  Alert(
+                      context: context,
+                      type: AlertType.error,
+                      closeIcon: const SizedBox.shrink(),
+                      title: 'All fields are required',
+                      buttons: [
+                        DialogButton(
+                          color: AppColors.kPrimaryColor,
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: const Text(
+                            'Ok',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ]).show();
+                } else {
+                  if (mounted) {
+                    setState(() {
+                      isLoading = true;
+                    });
+                  }
+                  try {
+                    bool status = await driverRequestLoad(
+                      context: context,
+                      userId: widget.userId,
+                      loadFrom: loadFrom.text,
+                      loadTo: loadTo.text,
+                    );
+                    if (status) {
+                      if (mounted) {
+                        setState(() {
+                          isLoading = false;
+                        });
+                      }
+                      Navigator.of(context).pop();
+                      getSnackbar(context, 'Requested Successfully');
+                      navigationPush(context, DriverLoadRequest());
+                    } else {
+                      if (mounted) {
+                        setState(() {
+                          isLoading = false;
+                        });
+                      }
+                      Alert(
+                          context: context,
+                          type: AlertType.error,
+                          closeIcon: const SizedBox.shrink(),
+                          title: 'Unexpected error occurred.',
+                          buttons: [
+                            DialogButton(
+                              color: AppColors.kPrimaryColor,
+                              onPressed: () => Navigator.of(context).pop(),
+                              child: const Text(
+                                'Ok',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ]).show();
+                    }
+                  } catch (e) {
+                    if (mounted) {
+                      setState(() {
+                        isLoading = false;
+                      });
+                    }
+                    Alert(
+                        context: context,
+                        type: AlertType.error,
+                        closeIcon: const SizedBox.shrink(),
+                        title: 'Unexpected error occurred.',
+                        buttons: [
+                          DialogButton(
+                            color: AppColors.kPrimaryColor,
+                            onPressed: () => Navigator.of(context).pop(),
+                            child: const Text(
+                              'Ok',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ]).show();
+                  }
+                }
+              },
+              buttonText: 'Request',
+              status: isLoading,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
