@@ -174,7 +174,7 @@ class Get_All_Driver_APIView(GenericAPIView):
         queryset = driver.objects.all()
         if (queryset.count()>0):
             serializer = DriverRegisterSerializer(queryset, many=True)
-            return Response({'data': serializer.data, 'message':'All Doctor Data Get', 'success':True}, status=status.HTTP_200_OK)
+            return Response({'data': serializer.data, 'message':'All Driver Data Get', 'success':True}, status=status.HTTP_200_OK)
         else:
             return Response({'data':'No data available', 'success':False}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -564,36 +564,42 @@ class LoadRequestAPIView(GenericAPIView):
         loads = request.data.get('load')
         load_status="0"
 
+        load_requests = load_requset.objects.filter(load=loads, user=users)
+        if load_requests.exists():
+            return Response({'message':'Already Requested','success':False}, status=status.HTTP_400_BAD_REQUEST)
+
+        else:
 
 
-        dta=user.objects.all().filter(id=users).values()
-        for i in dta:
-            print(i)
-            u_name=i['name']
+
+            dta=user.objects.all().filter(id=users).values()
+            for i in dta:
+                print(i)
+                u_name=i['name']
 
 
-        dta=driver.objects.all().filter(id=drivers).values()
-        for i in dta:
-            print(i)
-            d_name=i['name']
+            dta=driver.objects.all().filter(id=drivers).values()
+            for i in dta:
+                print(i)
+                d_name=i['name']
 
 
-        da=load.objects.all().filter(id=loads).values()
-        for i in da:
-            print(i)
-            load_from=i['load_from']
-            load_to=i['load_to']
-            load_quantity=i['load_quantity']
-            i['status'] = "1"
-            load.objects.filter(id=loads).update(status="1")
+            da=load.objects.all().filter(id=loads).values()
+            for i in da:
+                print(i)
+                load_from=i['load_from']
+                load_to=i['load_to']
+                load_quantity=i['load_quantity']
+                i['status'] = "1"
+                load.objects.filter(id=loads).update(status="1")
 
 
-        serializer = self.serializer_class(data= {'user':users, 'driver':drivers,'load':loads,'username':u_name,'drivername':d_name,'load_from':load_from,'load_to':load_to,'load_quantity':load_quantity,'status':load_status})
-        print(serializer)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({'data':serializer.data, 'message':'Load Requested successfully', 'success':True}, status = status.HTTP_201_CREATED)
-        return Response({'data':serializer.errors, 'message':'Failed','success':False}, status=status.HTTP_400_BAD_REQUEST)
+            serializer = self.serializer_class(data= {'user':users, 'driver':drivers,'load':loads,'username':u_name,'drivername':d_name,'load_from':load_from,'load_to':load_to,'load_quantity':load_quantity,'status':load_status})
+            print(serializer)
+            if serializer.is_valid():
+                serializer.save()
+                return Response({'data':serializer.data, 'message':'Load Requested successfully', 'success':True}, status = status.HTTP_201_CREATED)
+            return Response({'data':serializer.errors, 'message':'Failed','success':False}, status=status.HTTP_400_BAD_REQUEST)
 
 
 
@@ -620,3 +626,40 @@ class Drivers_View_load_Request_APIView(GenericAPIView):
         queryset = load_requset.objects.filter(driver=id,status="0").values()
         # serializer =UserTruckBookingSerializer(queryset)
         return Response({'data': queryset, 'message':'All Drivers View Load Request  ', 'success':True}, status=status.HTTP_200_OK)
+
+
+
+class PaymentAPIView(GenericAPIView):
+
+    serializer_class = UserTruckBookingSerializer
+
+    def post(self, request, id):
+        amount = request.data.get('amount')
+        payment_date = request.data.get('payment_date')
+       
+
+
+        if id:
+            data = TruckBooking.objects.get(user=id)
+            data.amount = amount
+            data.payment_date = payment_date
+            
+            data.save()
+
+
+            da=TruckBooking.objects.all().filter(user=id).values()
+            for i in da:
+                print(i)
+                trucks=i['truck_id']
+
+
+            dat=Drivertruck.objects.all().filter(id=trucks).values()
+            for i in dat:
+                print(i)
+                i['status'] = "1"
+                Drivertruck.objects.filter(id=trucks).update(status="0")
+               
+            serializer = self.serializer_class(data)
+            return Response({'data': serializer.data, 'message': 'Payment successfull', 'success': True}, status=status.HTTP_201_CREATED)
+
+        return Response({'message': 'Invalid request', 'success': False}, status=status.HTTP_400_BAD_REQUEST)

@@ -80,6 +80,8 @@ class TruckBooking(models.Model):
     load_quantity=models.CharField(max_length=100)
     starting=models.CharField(max_length=80,)
     ending=models.CharField(max_length=100)
+    amount = models.CharField(max_length=100, blank=True, null=True)
+    payment_date = models.CharField(max_length=100, blank=True, null=True)
     date=models.CharField(max_length=100)
     status=models.CharField(max_length=10)
     def __str__(self):

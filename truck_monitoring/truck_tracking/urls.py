@@ -75,4 +75,6 @@ urlpatterns = [
 
    path('driver_view_load_request/<int:id>', views.Drivers_View_load_Request_APIView.as_view(), name='driver_view_load_request'),
 
+   path('payment/<int:id>', views.PaymentAPIView.as_view(), name='payment'),
+
 ]
