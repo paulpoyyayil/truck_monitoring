@@ -28,4 +28,5 @@ class ApiConstants {
   static const driverRequestLoad = 'api/driver_request_for_load';
   static const userViewLoads = 'api/user_view_load_request';
   static const userAcceptLoad = 'api/user_accept_request';
+  static const driverLoads = 'api/driver_view_load_request';
 }

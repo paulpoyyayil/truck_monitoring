@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:remixicon/remixicon.dart';
 import 'package:truck_monitor/config/colors.dart';
 import 'package:truck_monitor/data.dart';
+import 'package:truck_monitor/screens/driver_loads/driver_loads.dart';
 import 'package:truck_monitor/screens/truck_stop/truck_stop.dart';
 import 'package:truck_monitor/screens/add_vehicle/add_vehicle.dart';
 import 'package:truck_monitor/screens/book_truck/book_truck.dart';
@@ -52,6 +53,8 @@ class _HomeTabState extends State<HomeTab> {
           return navigationPush(context, const DriverLoadRequest());
         case 3:
           return navigationPush(context, const DriverMessages());
+        case 4:
+          return navigationPush(context, const DriverLoads());
       }
     }
   }
