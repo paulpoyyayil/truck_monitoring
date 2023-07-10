@@ -390,42 +390,44 @@ class _ChatModalState extends State<ChatModal> {
                         ),
                       ]).show();
                 } else {
-                  if (mounted) {
-                    setState(() {
-                      isLoading = true;
-                    });
-                  }
-                  try {
-                    bool status = await userSendChat(
-                      context: context,
-                      driverId: widget.driverId,
-                      chat: message.text,
-                    );
-                    if (status) {
-                      if (mounted) {
-                        setState(() {
-                          isLoading = false;
-                        });
-                      }
-                      getSnackbar(context, 'Message Sent');
-                      Navigator.pop(context);
-                    } else {
-                      if (mounted) {
-                        setState(() {
-                          isLoading = false;
-                        });
-                      }
-                      getSnackbar(context, 'Unexpected error occurred.');
-                      Navigator.pop(context);
-                    }
-                  } catch (e) {
+                  if (!isLoading) {
                     if (mounted) {
                       setState(() {
-                        isLoading = false;
+                        isLoading = true;
                       });
                     }
-                    getSnackbar(context, e.toString());
-                    Navigator.pop(context);
+                    try {
+                      bool status = await userSendChat(
+                        context: context,
+                        driverId: widget.driverId,
+                        chat: message.text,
+                      );
+                      if (status) {
+                        if (mounted) {
+                          setState(() {
+                            isLoading = false;
+                          });
+                        }
+                        getSnackbar(context, 'Message Sent');
+                        Navigator.pop(context);
+                      } else {
+                        if (mounted) {
+                          setState(() {
+                            isLoading = false;
+                          });
+                        }
+                        getSnackbar(context, 'Unexpected error occurred.');
+                        Navigator.pop(context);
+                      }
+                    } catch (e) {
+                      if (mounted) {
+                        setState(() {
+                          isLoading = false;
+                        });
+                      }
+                      getSnackbar(context, e.toString());
+                      Navigator.pop(context);
+                    }
                   }
                 }
               },

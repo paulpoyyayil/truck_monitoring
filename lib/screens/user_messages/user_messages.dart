@@ -37,7 +37,6 @@ class _UserMessagesState extends State<UserMessages> {
     }
   }
 
-  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

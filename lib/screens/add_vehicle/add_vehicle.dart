@@ -44,43 +44,45 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                       controllers[4].text.isEmpty) {
                     getSnackbar(context, 'Add all data');
                   } else {
-                    if (mounted) {
-                      setState(() {
-                        isLoading = true;
-                      });
-                    }
-                    try {
-                      AddTruckModel _data = await addTruck(
-                        context: context,
-                        truckName: controllers[0].text,
-                        truckNumber: controllers[1].text,
-                        truckFrom: controllers[2].text,
-                        truckTo: controllers[3].text,
-                        loadCapacity: controllers[4].text,
-                      );
-                      if (_data.success!) {
-                        if (mounted) {
-                          setState(() {
-                            isLoading = false;
-                          });
-                        }
-                        getSnackbar(context, _data.message!);
-                        navigationPush(context, Homepage(selectedIndex: 0));
-                      } else {
-                        if (mounted) {
-                          setState(() {
-                            isLoading = false;
-                          });
-                        }
-                        getSnackbar(context, _data.message!);
-                      }
-                    } catch (e) {
+                    if (!isLoading) {
                       if (mounted) {
                         setState(() {
-                          isLoading = false;
+                          isLoading = true;
                         });
                       }
-                      getSnackbar(context, e.toString());
+                      try {
+                        AddTruckModel _data = await addTruck(
+                          context: context,
+                          truckName: controllers[0].text,
+                          truckNumber: controllers[1].text,
+                          truckFrom: controllers[2].text,
+                          truckTo: controllers[3].text,
+                          loadCapacity: controllers[4].text,
+                        );
+                        if (_data.success!) {
+                          if (mounted) {
+                            setState(() {
+                              isLoading = false;
+                            });
+                          }
+                          getSnackbar(context, _data.message!);
+                          navigationPush(context, Homepage(selectedIndex: 0));
+                        } else {
+                          if (mounted) {
+                            setState(() {
+                              isLoading = false;
+                            });
+                          }
+                          getSnackbar(context, _data.message!);
+                        }
+                      } catch (e) {
+                        if (mounted) {
+                          setState(() {
+                            isLoading = false;
+                          });
+                        }
+                        getSnackbar(context, e.toString());
+                      }
                     }
                   }
                 },

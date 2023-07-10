@@ -111,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   buttonText: 'Login',
                   status: isLoading,
                   onTap: () async {
-                    if (isLoading == false) {
+                    if (!isLoading) {
                       if (_userName.text.isEmpty || _password.text.isEmpty) {
                         if (context.mounted) {
                           getSnackbar(context, 'All fields are required');

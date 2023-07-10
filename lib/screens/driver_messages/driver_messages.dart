@@ -27,6 +27,7 @@ class DriverMessages extends StatefulWidget {
 
 class _DriverMessagesState extends State<DriverMessages> {
   ChatsModel? _chatsModel;
+
   @override
   void initState() {
     super.initState();
@@ -44,7 +45,6 @@ class _DriverMessagesState extends State<DriverMessages> {
     }
   }
 
-  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -217,36 +217,38 @@ class _ChatModalState extends State<ChatModal> {
                         ),
                       ]).show();
                 } else {
-                  if (mounted) {
-                    setState(() {
-                      isLoading = true;
-                    });
-                  }
-                  try {
-                    bool status = await driverSendChat(
-                      context: context,
-                      chatId: widget.chatId,
-                      reply: message.text,
-                    );
-                    if (status) {
-                      getSnackbar(context, 'Reply Sent');
-                      navigationPush(context, DriverMessages());
-                    } else {
+                  if (!isLoading) {
+                    if (mounted) {
+                      setState(() {
+                        isLoading = true;
+                      });
+                    }
+                    try {
+                      bool status = await driverSendChat(
+                        context: context,
+                        chatId: widget.chatId,
+                        reply: message.text,
+                      );
+                      if (status) {
+                        getSnackbar(context, 'Reply Sent');
+                        navigationPush(context, DriverMessages());
+                      } else {
+                        if (mounted) {
+                          setState(() {
+                            isLoading = false;
+                          });
+                        }
+                        getSnackbar(context, 'Unexpected error occurred.');
+                        Navigator.pop(context);
+                      }
+                    } catch (e) {
                       if (mounted) {
                         setState(() {
                           isLoading = false;
                         });
                       }
-                      getSnackbar(context, 'Unexpected error occurred.');
-                      Navigator.pop(context);
+                      getSnackbar(context, e.toString());
                     }
-                  } catch (e) {
-                    if (mounted) {
-                      setState(() {
-                        isLoading = false;
-                      });
-                    }
-                    getSnackbar(context, e.toString());
                   }
                 }
               },

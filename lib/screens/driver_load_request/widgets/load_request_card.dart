@@ -28,8 +28,6 @@ class LoadRequestCard extends StatefulWidget {
 }
 
 class _LoadRequestCardState extends State<LoadRequestCard> {
-  bool isLoading = false;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -89,7 +87,7 @@ class _LoadRequestCardState extends State<LoadRequestCard> {
               );
             },
             buttonText: 'Request Load',
-            status: isLoading,
+            status: false,
           ),
         ),
       ],
@@ -172,28 +170,53 @@ class _RequestLoadWidgetState extends State<RequestLoadWidget> {
                         ),
                       ]).show();
                 } else {
-                  if (mounted) {
-                    setState(() {
-                      isLoading = true;
-                    });
-                  }
-                  try {
-                    bool status = await driverRequestLoad(
-                      context: context,
-                      userId: widget.userId,
-                      loadFrom: loadFrom.text,
-                      loadTo: loadTo.text,
-                    );
-                    if (status) {
-                      if (mounted) {
-                        setState(() {
-                          isLoading = false;
-                        });
+                  if (!isLoading) {
+                    if (mounted) {
+                      setState(() {
+                        isLoading = true;
+                      });
+                    }
+                    try {
+                      bool status = await driverRequestLoad(
+                        context: context,
+                        userId: widget.userId,
+                        loadFrom: loadFrom.text,
+                        loadTo: loadTo.text,
+                      );
+                      if (status) {
+                        if (mounted) {
+                          setState(() {
+                            isLoading = false;
+                          });
+                        }
+                        Navigator.of(context).pop();
+                        getSnackbar(context, 'Requested Successfully');
+                        navigationPush(context, DriverLoadRequest());
+                      } else {
+                        if (mounted) {
+                          setState(() {
+                            isLoading = false;
+                          });
+                        }
+                        Alert(
+                            context: context,
+                            type: AlertType.error,
+                            closeIcon: const SizedBox.shrink(),
+                            title: 'Unexpected error occurred.',
+                            buttons: [
+                              DialogButton(
+                                color: AppColors.kPrimaryColor,
+                                onPressed: () => Navigator.of(context).pop(),
+                                child: const Text(
+                                  'Ok',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ]).show();
                       }
-                      Navigator.of(context).pop();
-                      getSnackbar(context, 'Requested Successfully');
-                      navigationPush(context, DriverLoadRequest());
-                    } else {
+                    } catch (e) {
                       if (mounted) {
                         setState(() {
                           isLoading = false;
@@ -217,29 +240,6 @@ class _RequestLoadWidgetState extends State<RequestLoadWidget> {
                             ),
                           ]).show();
                     }
-                  } catch (e) {
-                    if (mounted) {
-                      setState(() {
-                        isLoading = false;
-                      });
-                    }
-                    Alert(
-                        context: context,
-                        type: AlertType.error,
-                        closeIcon: const SizedBox.shrink(),
-                        title: 'Unexpected error occurred.',
-                        buttons: [
-                          DialogButton(
-                            color: AppColors.kPrimaryColor,
-                            onPressed: () => Navigator.of(context).pop(),
-                            child: const Text(
-                              'Ok',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ]).show();
                   }
                 }
               },

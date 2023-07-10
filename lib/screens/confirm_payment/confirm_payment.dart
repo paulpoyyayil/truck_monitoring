@@ -40,43 +40,45 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
   }
 
   void _processPayment() async {
-    if (mounted) {
-      setState(() {
-        isLoading = true;
-      });
-    }
-    try {
-      PaymentsModel status = await postPayments(
-        context: context,
-        amount: widget.paymentAmount,
-        payment_date: DateTime.now().toString(),
-      );
-      if (status.success!) {
-        if (mounted) {
-          setState(() {
-            isLoading = false;
-            ;
-          });
-        }
-        getSnackbar(context, status.message!);
-        navigationPush(context, PaymentScreen());
-      } else {
-        if (mounted) {
-          setState(() {
-            isLoading = false;
-            ;
-          });
-        }
-        getSnackbar(context, status.message!);
-      }
-    } catch (e) {
+    if (!isLoading) {
       if (mounted) {
         setState(() {
-          isLoading = false;
-          ;
+          isLoading = true;
         });
       }
-      getSnackbar(context, e.toString());
+      try {
+        PaymentsModel status = await postPayments(
+          context: context,
+          amount: widget.paymentAmount,
+          payment_date: DateTime.now().toString(),
+        );
+        if (status.success!) {
+          if (mounted) {
+            setState(() {
+              isLoading = false;
+              ;
+            });
+          }
+          getSnackbar(context, status.message!);
+          navigationPush(context, PaymentScreen());
+        } else {
+          if (mounted) {
+            setState(() {
+              isLoading = false;
+              ;
+            });
+          }
+          getSnackbar(context, status.message!);
+        }
+      } catch (e) {
+        if (mounted) {
+          setState(() {
+            isLoading = false;
+            ;
+          });
+        }
+        getSnackbar(context, e.toString());
+      }
     }
   }
 

@@ -92,60 +92,62 @@ class _ProfileTabState extends State<ProfileTab> {
                       Expanded(
                         child: StatusButton(
                           onTap: () async {
-                            if (mounted) {
-                              setState(() {
-                                isLoading = true;
-                              });
-                            }
-                            try {
-                              bool status = role == 'user'
-                                  ? await updateUser(
-                                      context: context,
-                                      name: controllers[0].text,
-                                      mobile: controllers[1].text,
-                                      email: controllers[2].text,
-                                    )
-                                  : await updateDriver(
-                                      context: context,
-                                      name: controllers[0].text,
-                                      mobile: controllers[1].text,
-                                      email: controllers[2].text,
-                                    );
-                              if (status) {
-                                if (mounted) {
-                                  setState(() {
-                                    isLoading = false;
-                                  });
-                                }
-                                showDialog(
-                                  context: context,
-                                  barrierDismissible: false,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      content: SingleChildScrollView(
-                                        child: Center(
-                                            child: CircularProgressIndicator
-                                                .adaptive()),
-                                      ),
-                                    );
-                                  },
-                                );
-                                _getData().then(
-                                    (value) => Navigator.of(context).pop());
-                              } else {
-                                if (mounted) {
-                                  setState(() {
-                                    isLoading = false;
-                                  });
-                                }
-                              }
-                            } catch (e) {
+                            if (!isLoading) {
                               if (mounted) {
                                 setState(() {
-                                  isLoading = false;
+                                  isLoading = true;
                                 });
                               }
-                              getSnackbar(context, e.toString());
+                              try {
+                                bool status = role == 'user'
+                                    ? await updateUser(
+                                        context: context,
+                                        name: controllers[0].text,
+                                        mobile: controllers[1].text,
+                                        email: controllers[2].text,
+                                      )
+                                    : await updateDriver(
+                                        context: context,
+                                        name: controllers[0].text,
+                                        mobile: controllers[1].text,
+                                        email: controllers[2].text,
+                                      );
+                                if (status) {
+                                  if (mounted) {
+                                    setState(() {
+                                      isLoading = false;
+                                    });
+                                  }
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        content: SingleChildScrollView(
+                                          child: Center(
+                                              child: CircularProgressIndicator
+                                                  .adaptive()),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                  _getData().then(
+                                      (value) => Navigator.of(context).pop());
+                                } else {
+                                  if (mounted) {
+                                    setState(() {
+                                      isLoading = false;
+                                    });
+                                  }
+                                }
+                              } catch (e) {
+                                if (mounted) {
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                }
+                                getSnackbar(context, e.toString());
+                              }
                             }
                           },
                           buttonText: 'EDIT',

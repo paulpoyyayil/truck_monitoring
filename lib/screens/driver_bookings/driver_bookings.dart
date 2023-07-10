@@ -138,39 +138,41 @@ class _BookingsCardState extends State<BookingsCard> {
           ),
           StatusButton(
             onTap: () async {
-              if (mounted) {
-                setState(() {
-                  isLoading = true;
-                });
-              }
-              try {
-                bool status = await driverAcceptBooking(
-                  context: context,
-                  bookingId: widget.id,
-                );
-                if (status) {
-                  if (mounted) {
-                    setState(() {
-                      isLoading = false;
-                    });
-                  }
-                  getSnackbar(context, 'Booking Accepted');
-                  navigationPush(context, DriverBookings());
-                } else {
-                  if (mounted) {
-                    setState(() {
-                      isLoading = false;
-                    });
-                  }
-                  getSnackbar(context, 'Unexpected error occurred.');
-                }
-              } catch (e) {
+              if (!isLoading) {
                 if (mounted) {
                   setState(() {
-                    isLoading = false;
+                    isLoading = true;
                   });
                 }
-                getSnackbar(context, e.toString());
+                try {
+                  bool status = await driverAcceptBooking(
+                    context: context,
+                    bookingId: widget.id,
+                  );
+                  if (status) {
+                    if (mounted) {
+                      setState(() {
+                        isLoading = false;
+                      });
+                    }
+                    getSnackbar(context, 'Booking Accepted');
+                    navigationPush(context, DriverBookings());
+                  } else {
+                    if (mounted) {
+                      setState(() {
+                        isLoading = false;
+                      });
+                    }
+                    getSnackbar(context, 'Unexpected error occurred.');
+                  }
+                } catch (e) {
+                  if (mounted) {
+                    setState(() {
+                      isLoading = false;
+                    });
+                  }
+                  getSnackbar(context, e.toString());
+                }
               }
             },
             buttonText: 'Accept',
