@@ -630,36 +630,25 @@ class Drivers_View_load_Request_APIView(GenericAPIView):
 
 
 class PaymentAPIView(GenericAPIView):
-
     serializer_class = UserTruckBookingSerializer
 
     def post(self, request, id):
         amount = request.data.get('amount')
         payment_date = request.data.get('payment_date')
-       
+
+        data = TruckBooking.objects.filter(user=id)  # Use filter() without first()
+
+        if data:
+            data.update(amount=amount, payment_date=payment_date)  # Update all objects in the queryset
+
+            truck_ids = data.values_list('truck_id', flat=True)  # Get a list of truck IDs
+
+            Drivertruck.objects.filter(id__in=truck_ids).update(status="0")  # Update status of matching truck IDs
+
+            serializer = self.serializer_class(data, many=True)  # Serialize all objects in the queryset
+            return Response({'data': serializer.data, 'message': 'Payment successful', 'success': True},
+                            status=status.HTTP_201_CREATED)
+        else:
+            return Response({'message': 'Invalid request', 'success': False}, status=status.HTTP_400_BAD_REQUEST)
 
 
-        if id:
-            data = TruckBooking.objects.get(user=id)
-            data.amount = amount
-            data.payment_date = payment_date
-            
-            data.save()
-
-
-            da=TruckBooking.objects.all().filter(user=id).values()
-            for i in da:
-                print(i)
-                trucks=i['truck_id']
-
-
-            dat=Drivertruck.objects.all().filter(id=trucks).values()
-            for i in dat:
-                print(i)
-                i['status'] = "1"
-                Drivertruck.objects.filter(id=trucks).update(status="0")
-               
-            serializer = self.serializer_class(data)
-            return Response({'data': serializer.data, 'message': 'Payment successfull', 'success': True}, status=status.HTTP_201_CREATED)
-
-        return Response({'message': 'Invalid request', 'success': False}, status=status.HTTP_400_BAD_REQUEST)

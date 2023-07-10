@@ -75,73 +75,78 @@ class _DriverMessagesState extends State<DriverMessages> {
                         EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
                     child: ListView.separated(
                       itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            if (role == 'driver') {
-                              if (_chatsModel!.data![index].replay!.isEmpty) {
-                                showModalBottomSheet(
-                                  isScrollControlled: true,
-                                  context: context,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(16.r),
-                                      topRight: Radius.circular(16.r),
-                                    ),
+                        return CardOutline(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      RowText(
+                                        title: 'User Name: ',
+                                        text: _chatsModel!
+                                            .data![index].userName!.titleCase,
+                                      ),
+                                      RowText(
+                                        title: 'Message: ',
+                                        text: _chatsModel!.data![index].chat!,
+                                      ),
+                                      if (_chatsModel!
+                                          .data![index].replay!.isNotEmpty)
+                                        RowText(
+                                          title: 'Reply: ',
+                                          text:
+                                              _chatsModel!.data![index].replay!,
+                                        ),
+                                      RowText(
+                                        title: 'Date: ',
+                                        text: DateFormat('dd-MM-yyyy').format(
+                                          DateTime.parse(
+                                              _chatsModel!.data![index].date!),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  builder: (context) {
-                                    return ChatModal(
-                                      chatId: _chatsModel!.data![index].id
-                                          .toString(),
-                                      userName:
-                                          _chatsModel!.data![index].userName!,
-                                    );
+                                ],
+                              ),
+                              if (_chatsModel!.data![index].replay!.isEmpty)
+                                StatusButton(
+                                  onTap: () {
+                                    if (role == 'driver') {
+                                      if (_chatsModel!
+                                          .data![index].replay!.isEmpty) {
+                                        showModalBottomSheet(
+                                          isScrollControlled: true,
+                                          context: context,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(16.r),
+                                              topRight: Radius.circular(16.r),
+                                            ),
+                                          ),
+                                          builder: (context) {
+                                            return ChatModal(
+                                              chatId: _chatsModel!
+                                                  .data![index].id
+                                                  .toString(),
+                                              userName: _chatsModel!
+                                                  .data![index].userName!,
+                                            );
+                                          },
+                                        );
+                                      } else {
+                                        getSnackbar(context,
+                                            'Already replied to this message');
+                                      }
+                                    }
                                   },
-                                );
-                              } else {
-                                getSnackbar(
-                                    context, 'Already replied to this message');
-                              }
-                            }
-                          },
-                          child: CardOutline(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        RowText(
-                                          title: 'User Name: ',
-                                          text: _chatsModel!
-                                              .data![index].userName!.titleCase,
-                                        ),
-                                        RowText(
-                                          title: 'Message: ',
-                                          text: _chatsModel!.data![index].chat!,
-                                        ),
-                                        if (_chatsModel!
-                                            .data![index].replay!.isNotEmpty)
-                                          RowText(
-                                            title: 'Reply: ',
-                                            text: _chatsModel!
-                                                .data![index].replay!,
-                                          ),
-                                        RowText(
-                                          title: 'Date: ',
-                                          text: DateFormat('dd-MM-yyyy').format(
-                                            DateTime.parse(_chatsModel!
-                                                .data![index].date!),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                                  buttonText: 'Reply',
+                                  status: false,
+                                )
+                            ],
                           ),
                         );
                       },

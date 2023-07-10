@@ -1,6 +1,6 @@
 class ApiConstants {
   static const baseUrl =
-      'https://ec29-2405-201-f00a-20cc-11b-82c5-92a9-de66.ngrok-free.app/';
+      'https://d0ad-2405-201-f006-1-99b0-6bf3-9ae1-51ee.ngrok-free.app/';
   static const login = 'api/login_users';
   static const registerUser = 'api/user_register';
   static const registerDriver = 'api/driver_register';
@@ -8,6 +8,7 @@ class ApiConstants {
   static const driverWithoutVehicle = 'api/list_drivers_without_vehicle';
   static const viewTrucks = 'api/all_driver_added_Vehicle';
   static const truckBooking = 'api/truck_booking';
+  static const allUsers = 'api/all_user';
   static const allDriver = 'api/all_driver';
   static const addVehicle = 'api/driver_add_Vehicle';
   static const userData = 'api/single_user/';
@@ -29,4 +30,5 @@ class ApiConstants {
   static const userViewLoads = 'api/user_view_load_request';
   static const userAcceptLoad = 'api/user_accept_request';
   static const driverLoads = 'api/driver_view_load_request';
+  static const payments = 'api/payment';
 }

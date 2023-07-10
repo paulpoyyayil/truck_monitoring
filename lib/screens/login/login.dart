@@ -9,6 +9,7 @@ import 'package:truck_monitor/utils/snackbar.dart';
 import 'package:truck_monitor/utils/willpop.dart';
 import 'package:truck_monitor/widgets/status_button.dart';
 import 'package:truck_monitor/widgets/textfield.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -21,6 +22,21 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _userName = TextEditingController();
   final TextEditingController _password = TextEditingController();
   bool isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(milliseconds: 1000))
+        .then((value) => _askPermission());
+  }
+
+  _askPermission() async {
+    await Permission.notification.isDenied.then((value) {
+      if (value) {
+        Permission.notification.request();
+      }
+    });
+  }
 
   @override
   void dispose() {

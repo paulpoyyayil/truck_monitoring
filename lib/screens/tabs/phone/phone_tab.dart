@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:truck_monitor/config/colors.dart';
 import 'package:truck_monitor/data.dart';
-import 'package:truck_monitor/models/all_drivers.dart';
 import 'package:truck_monitor/service/all_driver.dart';
+import 'package:truck_monitor/service/all_users.dart';
 import 'package:truck_monitor/service/user_send_chat.dart';
 import 'package:truck_monitor/utils/logout_and_navigate.dart';
 import 'package:truck_monitor/utils/call.dart';
@@ -25,7 +25,7 @@ class PhoneTab extends StatefulWidget {
 }
 
 class _PhoneTabState extends State<PhoneTab> {
-  AllDriverModel? _allDriverModel;
+  var _allDriverModel;
   @override
   void initState() {
     super.initState();
@@ -35,7 +35,9 @@ class _PhoneTabState extends State<PhoneTab> {
   _getData() async {
     logoutAndNavigate(context);
     try {
-      _allDriverModel = await getAllDriver(context: context);
+      _allDriverModel = role == 'user'
+          ? await getAllDriver(context: context)
+          : await getAllUsers(context: context);
       if (mounted) {
         setState(() {});
       }
@@ -121,15 +123,15 @@ class _PhoneTabState extends State<PhoneTab> {
                                               RowText(
                                                 title: 'Name: ',
                                                 text: _allDriverModel!
-                                                    .data![index]
-                                                    .name!
+                                                    .data![index].name!
+                                                    .toString()
                                                     .titleCase,
                                               ),
                                               RowText(
                                                 title: 'Location: ',
                                                 text: _allDriverModel!
-                                                    .data![index]
-                                                    .location!
+                                                    .data![index].location!
+                                                    .toString()
                                                     .titleCase,
                                               ),
                                             ],
@@ -182,15 +184,15 @@ class _PhoneTabState extends State<PhoneTab> {
                                               RowText(
                                                 title: 'Name: ',
                                                 text: _allDriverModel!
-                                                    .data![index]
-                                                    .name!
+                                                    .data![index].name!
+                                                    .toString()
                                                     .titleCase,
                                               ),
                                               RowText(
                                                 title: 'Location: ',
                                                 text: _allDriverModel!
-                                                    .data![index]
-                                                    .location!
+                                                    .data![index].location!
+                                                    .toString()
                                                     .titleCase,
                                               ),
                                             ],
@@ -268,15 +270,15 @@ class _PhoneTabState extends State<PhoneTab> {
                                               RowText(
                                                 title: 'Name: ',
                                                 text: _allDriverModel!
-                                                    .data![index]
-                                                    .name!
+                                                    .data![index].name!
+                                                    .toString()
                                                     .titleCase,
                                               ),
                                               RowText(
                                                 title: 'Location: ',
                                                 text: _allDriverModel!
-                                                    .data![index]
-                                                    .location!
+                                                    .data![index].location!
+                                                    .toString()
                                                     .titleCase,
                                               ),
                                             ],

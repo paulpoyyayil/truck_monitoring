@@ -45,8 +45,8 @@ class _LoadRequestCardState extends State<LoadRequestCard> {
               color: AppColors.kBorderColor,
             ),
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(8.r),
-              topRight: Radius.circular(8.r),
+              topLeft: Radius.circular(16.r),
+              topRight: Radius.circular(16.r),
             ),
             color: Colors.white,
             boxShadow: const [

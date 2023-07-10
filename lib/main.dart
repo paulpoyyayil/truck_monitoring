@@ -7,6 +7,8 @@ import 'package:truck_monitor/screens/homepage/homepage.dart';
 import 'package:truck_monitor/screens/login/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -31,6 +33,7 @@ class MyApp extends StatelessWidget {
           FocusManager.instance.primaryFocus?.unfocus();
         },
         child: MaterialApp(
+          navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             fontFamily: 'Montserrat',

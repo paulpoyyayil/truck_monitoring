@@ -11,7 +11,7 @@ import 'package:truck_monitor/screens/driver_bookings/driver_bookings.dart';
 import 'package:truck_monitor/screens/driver_messages/driver_messages.dart';
 import 'package:truck_monitor/screens/hire_drivers/hire_drivers.dart';
 import 'package:truck_monitor/screens/driver_load_request/driver_load_request.dart';
-import 'package:truck_monitor/screens/payment/payment.dart';
+import 'package:truck_monitor/screens/payment_screen/payment_screen.dart';
 import 'package:truck_monitor/screens/user_load_request/user_load_request.dart';
 import 'package:truck_monitor/screens/user_messages/user_messages.dart';
 import 'package:truck_monitor/utils/logout_and_navigate.dart';
@@ -37,7 +37,7 @@ class _HomeTabState extends State<HomeTab> {
         case 2:
           return navigationPush(context, const UserBookings());
         case 3:
-          return navigationPush(context, const Payment());
+          return navigationPush(context, const PaymentScreen());
         case 4:
           return navigationPush(context, const UserLoadRequest());
         case 5:
