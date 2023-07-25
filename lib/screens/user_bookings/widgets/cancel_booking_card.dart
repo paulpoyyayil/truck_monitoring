@@ -5,6 +5,7 @@ import 'package:truck_monitor/screens/homepage/homepage.dart';
 import 'package:truck_monitor/service/cancel_booking.dart';
 import 'package:truck_monitor/utils/navigation.dart';
 import 'package:truck_monitor/utils/snackbar.dart';
+import 'package:truck_monitor/widgets/big_button.dart';
 import 'package:truck_monitor/widgets/card_outline.dart';
 import 'package:truck_monitor/widgets/row_text.dart';
 import 'package:truck_monitor/widgets/status_button.dart';
@@ -54,50 +55,57 @@ class _CancelBookingCardState extends State<CancelBookingCard> {
               ),
             ],
           ),
-          StatusButton(
-            onTap: () async {
-              if (!isLoading) {
-                if (mounted) {
-                  setState(() {
-                    isLoading = true;
-                  });
-                }
-                try {
-                  bool status = await cancelBooking(
-                    context: context,
-                    bookingId: widget.data.id.toString(),
-                  );
-                  if (status) {
-                    showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          content: SingleChildScrollView(
-                            child: Center(
-                                child: CircularProgressIndicator.adaptive()),
-                          ),
-                        );
-                      },
-                    );
-                    getSnackbar(context, 'Cancelled');
-                    navigationPush(context, Homepage(selectedIndex: 0));
-                  } else {
-                    getSnackbar(context, 'Unexpected error occurred.');
-                  }
-                } catch (e) {
+          if (widget.data.amount == null && widget.data.status == '0')
+            StatusButton(
+              onTap: () async {
+                if (!isLoading) {
                   if (mounted) {
                     setState(() {
-                      isLoading = false;
+                      isLoading = true;
                     });
                   }
-                  getSnackbar(context, e.toString());
+                  try {
+                    bool status = await cancelBooking(
+                      context: context,
+                      bookingId: widget.data.id.toString(),
+                    );
+                    if (status) {
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            content: SingleChildScrollView(
+                              child: Center(
+                                  child: CircularProgressIndicator.adaptive()),
+                            ),
+                          );
+                        },
+                      );
+                      getSnackbar(context, 'Cancelled');
+                      navigationPush(context, Homepage(selectedIndex: 0));
+                    } else {
+                      getSnackbar(context, 'Unexpected error occurred.');
+                    }
+                  } catch (e) {
+                    if (mounted) {
+                      setState(() {
+                        isLoading = false;
+                      });
+                    }
+                    getSnackbar(context, e.toString());
+                  }
                 }
-              }
-            },
-            buttonText: 'Cancel Booking',
-            status: isLoading,
-          ),
+              },
+              buttonText: 'Cancel Booking',
+              status: isLoading,
+            ),
+          if (widget.data.amount != null)
+            CustomBigButton(
+              onTap: () {},
+              buttonText: 'Payment Complete',
+              backgroundColor: Colors.grey,
+            )
         ],
       ),
     );

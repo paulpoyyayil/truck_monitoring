@@ -9,6 +9,7 @@ import 'package:truck_monitor/utils/navigation.dart';
 import 'package:truck_monitor/utils/snackbar.dart';
 import 'package:truck_monitor/utils/willpop.dart';
 import 'package:truck_monitor/widgets/app_bar.dart';
+import 'package:truck_monitor/widgets/big_button.dart';
 import 'package:truck_monitor/widgets/card_outline.dart';
 import 'package:truck_monitor/widgets/row_text.dart';
 import 'package:truck_monitor/widgets/status_button.dart';
@@ -86,6 +87,7 @@ class _DriverBookingsState extends State<DriverBookings> {
                               .toUpperCase(),
                           status: _bookingsModel!.data![index].status!,
                           date: _bookingsModel!.data![index].date!,
+                          amount: _bookingsModel!.data![index].amount,
                         );
                       },
                       separatorBuilder: (context, index) =>
@@ -110,6 +112,7 @@ class BookingsCard extends StatefulWidget {
     required this.ending,
     required this.date,
     required this.status,
+    required this.amount,
   });
   final String id,
       name,
@@ -120,6 +123,7 @@ class BookingsCard extends StatefulWidget {
       ending,
       date,
       status;
+  final String? amount;
 
   @override
   State<BookingsCard> createState() => _BookingsCardState();
@@ -146,50 +150,56 @@ class _BookingsCardState extends State<BookingsCard> {
               RowText(title: 'Date: ', text: widget.date),
             ],
           ),
-          StatusButton(
-            onTap: () async {
-              if (widget.status == '0') {
-                if (!isLoading) {
-                  if (mounted) {
-                    setState(() {
-                      isLoading = true;
-                    });
-                  }
-                  try {
-                    bool status = await driverAcceptBooking(
-                      context: context,
-                      bookingId: widget.id,
-                    );
-                    if (status) {
-                      if (mounted) {
-                        setState(() {
-                          isLoading = false;
-                        });
-                      }
-                      getSnackbar(context, 'Booking Accepted');
-                      navigationPush(context, DriverBookings());
-                    } else {
-                      if (mounted) {
-                        setState(() {
-                          isLoading = false;
-                        });
-                      }
-                      getSnackbar(context, 'Unexpected error occurred.');
-                    }
-                  } catch (e) {
+          if (widget.amount == null)
+            StatusButton(
+              onTap: () async {
+                if (widget.status == '0') {
+                  if (!isLoading) {
                     if (mounted) {
                       setState(() {
-                        isLoading = false;
+                        isLoading = true;
                       });
                     }
-                    getSnackbar(context, e.toString());
+                    try {
+                      bool status = await driverAcceptBooking(
+                        context: context,
+                        bookingId: widget.id,
+                      );
+                      if (status) {
+                        if (mounted) {
+                          setState(() {
+                            isLoading = false;
+                          });
+                        }
+                        getSnackbar(context, 'Booking Accepted');
+                        navigationPush(context, DriverBookings());
+                      } else {
+                        if (mounted) {
+                          setState(() {
+                            isLoading = false;
+                          });
+                        }
+                        getSnackbar(context, 'Unexpected error occurred.');
+                      }
+                    } catch (e) {
+                      if (mounted) {
+                        setState(() {
+                          isLoading = false;
+                        });
+                      }
+                      getSnackbar(context, e.toString());
+                    }
                   }
                 }
-              }
-            },
-            buttonText: widget.status == '0' ? 'Accept' : 'Accepted',
-            backgroundColor: widget.status == '0' ? null : Colors.grey,
-            status: isLoading,
+              },
+              buttonText: widget.status == '0' ? 'Accept' : 'Accepted',
+              backgroundColor: widget.status == '0' ? null : Colors.grey,
+              status: isLoading,
+            ),
+          CustomBigButton(
+            onTap: () async {},
+            buttonText: 'Completed',
+            backgroundColor: Colors.grey,
           ),
         ],
       ),

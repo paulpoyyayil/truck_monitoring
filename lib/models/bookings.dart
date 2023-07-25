@@ -41,21 +41,26 @@ class BookingsModelData {
   String? ending;
   String? date;
   String? status;
+  String? amount;
+  String? paymentDate;
 
-  BookingsModelData(
-      {this.id,
-      this.userId,
-      this.driverId,
-      this.username,
-      this.truckId,
-      this.truckName,
-      this.driverName,
-      this.loadId,
-      this.loadQuantity,
-      this.starting,
-      this.ending,
-      this.date,
-      this.status});
+  BookingsModelData({
+    this.id,
+    this.userId,
+    this.driverId,
+    this.username,
+    this.truckId,
+    this.truckName,
+    this.driverName,
+    this.loadId,
+    this.loadQuantity,
+    this.starting,
+    this.ending,
+    this.date,
+    this.status,
+    this.amount,
+    this.paymentDate,
+  });
 
   BookingsModelData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -71,6 +76,8 @@ class BookingsModelData {
     ending = json['ending'];
     date = json['date'];
     status = json['status'];
+    amount = json['amount'];
+    paymentDate = json['payment_date'];
   }
 
   Map<String, dynamic> toJson() {
@@ -88,6 +95,8 @@ class BookingsModelData {
     data['ending'] = this.ending;
     data['date'] = this.date;
     data['status'] = this.status;
+    data['amount'] = this.amount;
+    data['payment_date'] = this.paymentDate;
     return data;
   }
 }

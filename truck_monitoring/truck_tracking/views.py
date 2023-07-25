@@ -1107,6 +1107,8 @@ class PaymentAPIView(GenericAPIView):
         print(serializer)
         if serializer.is_valid():
             serializer.save()
+
+            TruckBooking.objects.filter(pk=id).update(status="0")
             Drivertruck.objects.filter(pk=id).update(status="0")
 
             return Response(
