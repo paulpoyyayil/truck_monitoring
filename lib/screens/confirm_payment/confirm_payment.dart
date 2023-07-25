@@ -25,8 +25,8 @@ class ConfirmPaymentScreen extends StatefulWidget {
 }
 
 class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
-  TextEditingController _upi = TextEditingController();
-  TextEditingController _card = TextEditingController();
+  final TextEditingController _upi = TextEditingController();
+  final TextEditingController _card = TextEditingController();
   bool _isUpiSelected = true;
   bool isLoading = false;
 
@@ -62,25 +62,26 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
           if (mounted) {
             setState(() {
               isLoading = false;
-              ;
             });
           }
-          getSnackbar(context, 'Payment Success');
-          navigationPush(context, PaymentScreen());
+          if (mounted) {
+            getSnackbar(context, 'Payment Success');
+            navigationPush(context, const PaymentScreen());
+          }
         } else {
           if (mounted) {
             setState(() {
               isLoading = false;
-              ;
             });
           }
-          getSnackbar(context, 'Payment Failed');
+          if (mounted) {
+            getSnackbar(context, 'Payment Failed');
+          }
         }
       } catch (e) {
         if (mounted) {
           setState(() {
             isLoading = false;
-            ;
           });
         }
         getSnackbar(context, e.toString());
@@ -94,7 +95,7 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
       onWillPop: () => WillPopService().cancelPayment(context),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Payment'),
+          title: const Text('Payment'),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -212,7 +213,7 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
                   isPassword: false,
                   keyboardType: TextInputType.number,
                 ),
-              Spacer(),
+              const Spacer(),
               StatusButton(
                 onTap: () {
                   if (_isUpiSelected) {

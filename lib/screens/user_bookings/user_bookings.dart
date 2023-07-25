@@ -36,9 +36,13 @@ class _UserBookingsState extends State<UserBookings> {
       getSnackbar(context, e.toString());
     }
     try {
-      _loadModel = await userViewLoads(context: context);
+      if (mounted) {
+        _loadModel = await userViewLoads(context: context);
+      }
     } catch (e) {
-      getSnackbar(context, e.toString());
+      if (mounted) {
+        getSnackbar(context, e.toString());
+      }
     }
 
     if (mounted) {
@@ -90,7 +94,7 @@ class _UserBookingsState extends State<UserBookings> {
               child: TabBarView(
                 children: [
                   _bookingsModel == null
-                      ? Center(
+                      ? const Center(
                           child: CircularProgressIndicator.adaptive(),
                         )
                       : _bookingsModel!.data!.isEmpty
@@ -117,7 +121,7 @@ class _UserBookingsState extends State<UserBookings> {
                               ),
                             ),
                   _loadModel == null
-                      ? Center(
+                      ? const Center(
                           child: CircularProgressIndicator.adaptive(),
                         )
                       : _loadModel!.data!.isEmpty

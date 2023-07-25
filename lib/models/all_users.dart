@@ -9,7 +9,7 @@ class AllUsersModel {
     if (json['data'] != null) {
       data = <AllUsersModelData>[];
       json['data'].forEach((v) {
-        data!.add(new AllUsersModelData.fromJson(v));
+        data!.add(AllUsersModelData.fromJson(v));
       });
     }
     message = json['message'];
@@ -17,12 +17,12 @@ class AllUsersModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['message'] = this.message;
-    data['success'] = this.success;
+    data['message'] = message;
+    data['success'] = success;
     return data;
   }
 }
@@ -59,15 +59,15 @@ class AllUsersModelData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['mobile'] = this.mobile;
-    data['location'] = this.location;
-    data['role'] = this.role;
-    data['status'] = this.status;
-    data['login_id'] = this.loginId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['email'] = email;
+    data['mobile'] = mobile;
+    data['location'] = location;
+    data['role'] = role;
+    data['status'] = status;
+    data['login_id'] = loginId;
     return data;
   }
 }

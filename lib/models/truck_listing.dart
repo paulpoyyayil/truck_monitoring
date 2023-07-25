@@ -9,7 +9,7 @@ class TruckListingModel {
     if (json['data'] != null) {
       data = <TruckListingData>[];
       json['data'].forEach((v) {
-        data!.add(new TruckListingData.fromJson(v));
+        data!.add(TruckListingData.fromJson(v));
       });
     }
     message = json['message'];
@@ -17,12 +17,12 @@ class TruckListingModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['message'] = this.message;
-    data['success'] = this.success;
+    data['message'] = message;
+    data['success'] = success;
     return data;
   }
 }
@@ -62,16 +62,16 @@ class TruckListingData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['driver_name'] = this.driverName;
-    data['truck_name'] = this.truckName;
-    data['trucknumber'] = this.trucknumber;
-    data['truckfrom'] = this.truckfrom;
-    data['truckto'] = this.truckto;
-    data['load_capacity'] = this.loadCapacity;
-    data['status'] = this.status;
-    data['driver'] = this.driver;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['driver_name'] = driverName;
+    data['truck_name'] = truckName;
+    data['trucknumber'] = trucknumber;
+    data['truckfrom'] = truckfrom;
+    data['truckto'] = truckto;
+    data['load_capacity'] = loadCapacity;
+    data['status'] = status;
+    data['driver'] = driver;
     return data;
   }
 }

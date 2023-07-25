@@ -38,7 +38,7 @@ Future<AddTruckModel> addTruck({
       }
     }
   } catch (e) {
-    throw e;
+    rethrow;
   }
   throw 'Unexpected error occurred.';
 }

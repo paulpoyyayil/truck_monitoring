@@ -18,7 +18,7 @@ class PushNotificationService {
       await enableIOSNotifications();
       await registerNotificationListeners();
     } catch (e) {
-      print('Error setting up notifications: $e');
+      rethrow;
     }
   }
 
@@ -31,8 +31,8 @@ class PushNotificationService {
             AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
     var androidSettings =
-        AndroidInitializationSettings('@drawable/ic_firebase_icon');
-    var iOSSettings = DarwinInitializationSettings();
+        const AndroidInitializationSettings('@drawable/ic_firebase_icon');
+    var iOSSettings = const DarwinInitializationSettings();
     var initSetttings = InitializationSettings(
       android: androidSettings,
       iOS: iOSSettings,
@@ -69,9 +69,9 @@ class PushNotificationService {
                 importance: Importance.high,
                 enableVibration: true,
                 groupKey: 'com.truck.monitoring',
-                styleInformation: BigTextStyleInformation(''),
+                styleInformation: const BigTextStyleInformation(''),
               ),
-              iOS: DarwinNotificationDetails(
+              iOS: const DarwinNotificationDetails(
                 presentAlert: true,
                 presentSound: true,
               ),
@@ -91,7 +91,7 @@ class PushNotificationService {
     );
   }
 
-  androidNotificationChannel() => AndroidNotificationChannel(
+  androidNotificationChannel() => const AndroidNotificationChannel(
         'high_importance_channel',
         'Important Updates',
         description: "This channel is used for important notifications.",

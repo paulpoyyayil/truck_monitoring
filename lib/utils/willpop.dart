@@ -57,7 +57,7 @@ class WillPopService {
                   backgroundColor: AppColors.kPrimaryColor,
                 ),
                 onPressed: () =>
-                    navigationReplacement(context, PaymentScreen()),
+                    navigationReplacement(context, const PaymentScreen()),
                 child: const Text('Yes'),
               ),
             ],

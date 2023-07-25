@@ -25,7 +25,7 @@ from rest_framework.response import Response
 from django.shortcuts import render
 from .firebase import firebase_app
 from firebase_admin import messaging
-from firebase_admin import credentials, messaging
+from firebase_admin import messaging
 
 
 class UserRegisterAPIView(GenericAPIView):

@@ -9,7 +9,7 @@ class PaymentsModel {
     if (json['data'] != null) {
       data = <PaymentsModelData>[];
       json['data'].forEach((v) {
-        data!.add(new PaymentsModelData.fromJson(v));
+        data!.add(PaymentsModelData.fromJson(v));
       });
     }
     message = json['message'];
@@ -17,12 +17,12 @@ class PaymentsModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['message'] = this.message;
-    data['success'] = this.success;
+    data['message'] = message;
+    data['success'] = success;
     return data;
   }
 }
@@ -41,7 +41,7 @@ class PaymentsModelData {
   String? status;
   int? user;
   int? driver;
-  int? truck_id;
+  int? truckId;
   int? load;
 
   PaymentsModelData(
@@ -58,7 +58,7 @@ class PaymentsModelData {
       this.status,
       this.user,
       this.driver,
-      this.truck_id,
+      this.truckId,
       this.load});
 
   PaymentsModelData.fromJson(Map<String, dynamic> json) {
@@ -75,27 +75,27 @@ class PaymentsModelData {
     status = json['status'];
     user = json['user'];
     driver = json['driver'];
-    truck_id = json['truck_id'];
+    truckId = json['truck_id'];
     load = json['load'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['username'] = this.username;
-    data['truck_name'] = this.truckName;
-    data['driver_name'] = this.driverName;
-    data['load_quantity'] = this.loadQuantity;
-    data['starting'] = this.starting;
-    data['ending'] = this.ending;
-    data['amount'] = this.amount;
-    data['payment_date'] = this.paymentDate;
-    data['date'] = this.date;
-    data['status'] = this.status;
-    data['user'] = this.user;
-    data['driver'] = this.driver;
-    data['truck_id'] = this.truck_id;
-    data['load'] = this.load;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['username'] = username;
+    data['truck_name'] = truckName;
+    data['driver_name'] = driverName;
+    data['load_quantity'] = loadQuantity;
+    data['starting'] = starting;
+    data['ending'] = ending;
+    data['amount'] = amount;
+    data['payment_date'] = paymentDate;
+    data['date'] = date;
+    data['status'] = status;
+    data['user'] = user;
+    data['driver'] = driver;
+    data['truck_id'] = truckId;
+    data['load'] = load;
     return data;
   }
 }

@@ -54,7 +54,7 @@ class _DriverBookingsState extends State<DriverBookings> {
           onTapped: () => navigationPush(context, Homepage(selectedIndex: 0)),
         ),
         body: _bookingsModel == null
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator.adaptive(),
               )
             : _bookingsModel!.data!.isEmpty
@@ -171,15 +171,19 @@ class _BookingsCardState extends State<BookingsCard> {
                             isLoading = false;
                           });
                         }
-                        getSnackbar(context, 'Booking Accepted');
-                        navigationPush(context, DriverBookings());
+                        if (mounted) {
+                          getSnackbar(context, 'Booking Accepted');
+                          navigationPush(context, const DriverBookings());
+                        }
                       } else {
                         if (mounted) {
                           setState(() {
                             isLoading = false;
                           });
                         }
-                        getSnackbar(context, 'Unexpected error occurred.');
+                        if (mounted) {
+                          getSnackbar(context, 'Unexpected error occurred.');
+                        }
                       }
                     } catch (e) {
                       if (mounted) {

@@ -51,7 +51,7 @@ class _BookTruckModalState extends State<BookTruckModal> {
         });
       }
       try {
-        BookTruckModel? _truckBooking = await bookTruck(
+        BookTruckModel? truckBooking = await bookTruck(
           context: context,
           load: controllers[0].text,
           truckName: widget.truckName,
@@ -62,39 +62,43 @@ class _BookTruckModalState extends State<BookTruckModal> {
           driverId: widget.driverId,
           truckId: widget.truckId,
         );
-        if (_truckBooking.success!) {
+        if (truckBooking.success!) {
           if (mounted) {
             setState(() {
               isLoading = false;
             });
           }
-          Navigator.pop(context);
-          getSnackbar(context, _truckBooking.message!);
-          navigationPush(context, Homepage(selectedIndex: 0));
+          if (mounted) {
+            Navigator.pop(context);
+            getSnackbar(context, truckBooking.message!);
+            navigationPush(context, Homepage(selectedIndex: 0));
+          }
         } else {
           if (mounted) {
             setState(() {
               isLoading = false;
             });
           }
-          Alert(
-            context: context,
-            type: AlertType.error,
-            closeIcon: const SizedBox.shrink(),
-            title: _truckBooking.message!,
-            buttons: [
-              DialogButton(
-                color: AppColors.kPrimaryColor,
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text(
-                  'Ok',
-                  style: TextStyle(
-                    color: Colors.white,
+          if (mounted) {
+            Alert(
+              context: context,
+              type: AlertType.error,
+              closeIcon: const SizedBox.shrink(),
+              title: truckBooking.message!,
+              buttons: [
+                DialogButton(
+                  color: AppColors.kPrimaryColor,
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text(
+                    'Ok',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-              ),
-            ],
-          ).show();
+              ],
+            ).show();
+          }
         }
       } catch (e) {
         if (mounted) {
@@ -190,7 +194,7 @@ class _BookTruckModalState extends State<BookTruckModal> {
                 ),
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: Color.fromRGBO(146, 147, 149, 0.50),
+                    color: const Color.fromRGBO(146, 147, 149, 0.50),
                     width: 1.5,
                   ),
                   borderRadius: BorderRadius.circular(18.0),

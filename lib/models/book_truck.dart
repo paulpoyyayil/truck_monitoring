@@ -6,19 +6,18 @@ class BookTruckModel {
   BookTruckModel({this.data, this.message, this.success});
 
   BookTruckModel.fromJson(Map<String, dynamic> json) {
-    data =
-        json['data'] != null ? new BookTruckData.fromJson(json['data']) : null;
+    data = json['data'] != null ? BookTruckData.fromJson(json['data']) : null;
     message = json['message'];
     success = json['success'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
-    data['message'] = this.message;
-    data['success'] = this.success;
+    data['message'] = message;
+    data['success'] = success;
     return data;
   }
 }
@@ -70,20 +69,20 @@ class BookTruckData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['username'] = this.username;
-    data['truck_name'] = this.truckName;
-    data['driver_name'] = this.driverName;
-    data['load_quantity'] = this.loadQuantity;
-    data['starting'] = this.starting;
-    data['ending'] = this.ending;
-    data['date'] = this.date;
-    data['status'] = this.status;
-    data['user'] = this.user;
-    data['driver'] = this.driver;
-    data['truck'] = this.truck;
-    data['load'] = this.load;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['username'] = username;
+    data['truck_name'] = truckName;
+    data['driver_name'] = driverName;
+    data['load_quantity'] = loadQuantity;
+    data['starting'] = starting;
+    data['ending'] = ending;
+    data['date'] = date;
+    data['status'] = status;
+    data['user'] = user;
+    data['driver'] = driver;
+    data['truck'] = truck;
+    data['load'] = load;
     return data;
   }
 }

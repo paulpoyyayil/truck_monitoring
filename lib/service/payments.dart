@@ -23,7 +23,7 @@ Future<PaymentsModel> getPayment({required BuildContext context}) async {
       }
     }
   } catch (e) {
-    throw e;
+    rethrow;
   }
   throw 'Unexpected error occurred.';
 }
@@ -51,6 +51,6 @@ Future<bool> postPayments({
       return false;
     }
   } catch (e) {
-    throw e;
+    rethrow;
   }
 }

@@ -46,7 +46,7 @@ class _UserMessagesState extends State<UserMessages> {
         onTapped: () => navigationPush(context, Homepage(selectedIndex: 0)),
       ),
       body: _chatsModel == null
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator.adaptive(),
             )
           : _chatsModel!.data!.isEmpty

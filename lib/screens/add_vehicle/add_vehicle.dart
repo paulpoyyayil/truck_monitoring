@@ -51,7 +51,7 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                         });
                       }
                       try {
-                        AddTruckModel _data = await addTruck(
+                        AddTruckModel data = await addTruck(
                           context: context,
                           truckName: controllers[0].text,
                           truckNumber: controllers[1].text,
@@ -59,21 +59,25 @@ class _AddVehicleScreenState extends State<AddVehicleScreen> {
                           truckTo: controllers[3].text,
                           loadCapacity: controllers[4].text,
                         );
-                        if (_data.success!) {
+                        if (data.success!) {
                           if (mounted) {
                             setState(() {
                               isLoading = false;
                             });
                           }
-                          getSnackbar(context, _data.message!);
-                          navigationPush(context, Homepage(selectedIndex: 0));
+                          if (mounted) {
+                            getSnackbar(context, data.message!);
+                            navigationPush(context, Homepage(selectedIndex: 0));
+                          }
                         } else {
                           if (mounted) {
                             setState(() {
                               isLoading = false;
                             });
                           }
-                          getSnackbar(context, _data.message!);
+                          if (mounted) {
+                            getSnackbar(context, data.message!);
+                          }
                         }
                       } catch (e) {
                         if (mounted) {

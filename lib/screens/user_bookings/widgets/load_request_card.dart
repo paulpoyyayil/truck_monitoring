@@ -67,27 +67,31 @@ class _LoadRequestCardState extends State<LoadRequestCard> {
                         isLoading = false;
                       });
                     }
-                    getSnackbar(context, 'Request Accepted');
-                    showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          content: SingleChildScrollView(
-                            child: Center(
-                                child: CircularProgressIndicator.adaptive()),
-                          ),
-                        );
-                      },
-                    );
-                    navigationPush(context, Homepage(selectedIndex: 0));
+                    if (mounted) {
+                      getSnackbar(context, 'Request Accepted');
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) {
+                          return const AlertDialog(
+                            content: SingleChildScrollView(
+                              child: Center(
+                                  child: CircularProgressIndicator.adaptive()),
+                            ),
+                          );
+                        },
+                      );
+                      navigationPush(context, Homepage(selectedIndex: 0));
+                    }
                   } else {
                     if (mounted) {
                       setState(() {
                         isLoading = false;
                       });
                     }
-                    getSnackbar(context, 'Unexpected error occurred.');
+                    if (mounted) {
+                      getSnackbar(context, 'Unexpected error occurred.');
+                    }
                   }
                 } catch (e) {
                   if (mounted) {

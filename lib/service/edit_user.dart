@@ -31,6 +31,6 @@ Future<bool> updateUser({
       return false;
     }
   } catch (e) {
-    throw e;
+    rethrow;
   }
 }

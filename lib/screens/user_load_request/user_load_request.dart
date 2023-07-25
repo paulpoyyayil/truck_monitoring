@@ -62,15 +62,19 @@ class _UserLoadRequestState extends State<UserLoadRequest> {
                               isLoading = false;
                             });
                           }
-                          getSnackbar(context, 'Load Added successfully');
-                          navigationPush(context, Homepage(selectedIndex: 0));
+                          if (mounted) {
+                            getSnackbar(context, 'Load Added successfully');
+                            navigationPush(context, Homepage(selectedIndex: 0));
+                          }
                         } else {
                           if (mounted) {
                             setState(() {
                               isLoading = false;
                             });
                           }
-                          getSnackbar(context, 'Unexpected error occurred.');
+                          if (mounted) {
+                            getSnackbar(context, 'Unexpected error occurred.');
+                          }
                         }
                       } catch (e) {
                         if (mounted) {

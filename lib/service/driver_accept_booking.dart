@@ -18,7 +18,7 @@ Future<bool> driverAcceptBooking(
       }
     }
   } catch (e) {
-    throw e;
+    rethrow;
   }
   throw 'Unexpected error occurred.';
 }

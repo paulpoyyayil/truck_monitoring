@@ -103,20 +103,21 @@ class _PaymentCardState extends State<PaymentCard> {
               SeparatedRowText(
                   title: 'Load Quantity', text: widget.loadQuantity),
               if (widget.paymentDate != null)
-                SeparatedRowText(title: '', text: ''),
+                const SeparatedRowText(title: '', text: ''),
               SeparatedRowText(
                   title: 'Amount',
                   text: '₹${widget.amount ?? amount.toStringAsFixed(2)}'),
               if (widget.paymentDate != null)
                 SeparatedRowText(
                     title: 'Payment Date',
-                    text:
-                        '${DateFormat('dd-MM-yyyy').format(DateTime.parse(widget.paymentDate!)).toString()}'),
+                    text: DateFormat('dd-MM-yyyy')
+                        .format(DateTime.parse(widget.paymentDate!))
+                        .toString()),
             ],
           ),
         ),
         if (widget.amount == null)
-          Container(
+          SizedBox(
             width: MediaQuery.sizeOf(context).width,
             child: CustomButton(
               onTap: () {

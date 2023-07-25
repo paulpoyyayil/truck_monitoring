@@ -9,7 +9,7 @@ class BookingsModel {
     if (json['data'] != null) {
       data = <BookingsModelData>[];
       json['data'].forEach((v) {
-        data!.add(new BookingsModelData.fromJson(v));
+        data!.add(BookingsModelData.fromJson(v));
       });
     }
     message = json['message'];
@@ -17,12 +17,12 @@ class BookingsModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['message'] = this.message;
-    data['success'] = this.success;
+    data['message'] = message;
+    data['success'] = success;
     return data;
   }
 }
@@ -81,22 +81,22 @@ class BookingsModelData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['driver_id'] = this.driverId;
-    data['username'] = this.username;
-    data['truck_id'] = this.truckId;
-    data['truck_name'] = this.truckName;
-    data['driver_name'] = this.driverName;
-    data['load_id'] = this.loadId;
-    data['load_quantity'] = this.loadQuantity;
-    data['starting'] = this.starting;
-    data['ending'] = this.ending;
-    data['date'] = this.date;
-    data['status'] = this.status;
-    data['amount'] = this.amount;
-    data['payment_date'] = this.paymentDate;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['user_id'] = userId;
+    data['driver_id'] = driverId;
+    data['username'] = username;
+    data['truck_id'] = truckId;
+    data['truck_name'] = truckName;
+    data['driver_name'] = driverName;
+    data['load_id'] = loadId;
+    data['load_quantity'] = loadQuantity;
+    data['starting'] = starting;
+    data['ending'] = ending;
+    data['date'] = date;
+    data['status'] = status;
+    data['amount'] = amount;
+    data['payment_date'] = paymentDate;
     return data;
   }
 }

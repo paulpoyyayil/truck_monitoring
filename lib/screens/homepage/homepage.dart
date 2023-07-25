@@ -36,7 +36,7 @@ class _HomepageState extends State<Homepage> {
       case 0:
         return const HomeTab();
       case 1:
-        return role == 'user' ? PhoneTab() : MessageTab();
+        return role == 'user' ? const PhoneTab() : const MessageTab();
       case 2:
         return const ProfileTab();
       default:
@@ -71,21 +71,21 @@ class _HomepageState extends State<Homepage> {
           iconSize: 24.0,
           onTap: _onItemTapped,
           items: [
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
               icon: Icon(Remix.home_line),
               label: '',
             ),
             if (role == 'user')
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                 icon: Icon(Remix.phone_line),
                 label: '',
               ),
             if (role == 'driver')
-              BottomNavigationBarItem(
+              const BottomNavigationBarItem(
                 icon: Icon(Remix.message_line),
                 label: '',
               ),
-            BottomNavigationBarItem(
+            const BottomNavigationBarItem(
               icon: Icon(Remix.user_3_line),
               label: '',
             ),

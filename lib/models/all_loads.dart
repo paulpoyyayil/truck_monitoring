@@ -9,7 +9,7 @@ class AllLoadsModel {
     if (json['data'] != null) {
       data = <AllLoadsModelData>[];
       json['data'].forEach((v) {
-        data!.add(new AllLoadsModelData.fromJson(v));
+        data!.add(AllLoadsModelData.fromJson(v));
       });
     }
     message = json['message'];
@@ -17,12 +17,12 @@ class AllLoadsModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['message'] = this.message;
-    data['success'] = this.success;
+    data['message'] = message;
+    data['success'] = success;
     return data;
   }
 }
@@ -59,15 +59,15 @@ class AllLoadsModelData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['username'] = this.username;
-    data['load_description'] = this.loadDescription;
-    data['load_from'] = this.loadFrom;
-    data['load_to'] = this.loadTo;
-    data['load_quantity'] = this.loadQuantity;
-    data['status'] = this.status;
-    data['user'] = this.user;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['username'] = username;
+    data['load_description'] = loadDescription;
+    data['load_from'] = loadFrom;
+    data['load_to'] = loadTo;
+    data['load_quantity'] = loadQuantity;
+    data['status'] = status;
+    data['user'] = user;
     return data;
   }
 }

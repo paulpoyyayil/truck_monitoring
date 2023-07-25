@@ -28,6 +28,6 @@ Future<bool> setToken({required String token}) async {
       return false;
     }
   } catch (e) {
-    throw e;
+    rethrow;
   }
 }

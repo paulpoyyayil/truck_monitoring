@@ -47,7 +47,7 @@ class _MessageTabState extends State<MessageTab> {
   @override
   Widget build(BuildContext context) {
     if (_chatsModel == null) {
-      return Center(
+      return const Center(
         child: CircularProgressIndicator.adaptive(),
       );
     } else {
@@ -219,16 +219,20 @@ class _ChatModalState extends State<ChatModal> {
                         reply: message.text,
                       );
                       if (status) {
-                        getSnackbar(context, 'Reply Sent');
-                        navigationPush(context, Homepage(selectedIndex: 1));
+                        if (mounted) {
+                          getSnackbar(context, 'Reply Sent');
+                          navigationPush(context, Homepage(selectedIndex: 1));
+                        }
                       } else {
                         if (mounted) {
                           setState(() {
                             isLoading = false;
                           });
                         }
-                        getSnackbar(context, 'Unexpected error occurred.');
-                        Navigator.pop(context);
+                        if (mounted) {
+                          getSnackbar(context, 'Unexpected error occurred.');
+                          Navigator.pop(context);
+                        }
                       }
                     } catch (e) {
                       if (mounted) {

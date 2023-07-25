@@ -6,19 +6,18 @@ class UserModel {
   UserModel({this.data, this.message, this.success});
 
   UserModel.fromJson(Map<String, dynamic> json) {
-    data =
-        json['data'] != null ? new UserModelData.fromJson(json['data']) : null;
+    data = json['data'] != null ? UserModelData.fromJson(json['data']) : null;
     message = json['message'];
     success = json['success'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
-    data['message'] = this.message;
-    data['success'] = this.success;
+    data['message'] = message;
+    data['success'] = success;
     return data;
   }
 }
@@ -55,15 +54,15 @@ class UserModelData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['mobile'] = this.mobile;
-    data['location'] = this.location;
-    data['role'] = this.role;
-    data['status'] = this.status;
-    data['login_id'] = this.loginId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['email'] = email;
+    data['mobile'] = mobile;
+    data['location'] = location;
+    data['role'] = role;
+    data['status'] = status;
+    data['login_id'] = loginId;
     return data;
   }
 }

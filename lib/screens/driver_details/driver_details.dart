@@ -72,7 +72,7 @@ class _DriverDetailsState extends State<DriverDetails> {
                 ),
               ),
               SizedBox(height: 48.h),
-              Text(
+              const Text(
                 'Name',
                 style: TextStyle(
                   fontSize: 22,
@@ -81,13 +81,13 @@ class _DriverDetailsState extends State<DriverDetails> {
               ),
               Text(
                 widget.name,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
                 ),
               ),
               SizedBox(height: 14.h),
-              Text(
+              const Text(
                 'Location',
                 style: TextStyle(
                   fontSize: 22,
@@ -96,13 +96,13 @@ class _DriverDetailsState extends State<DriverDetails> {
               ),
               Text(
                 widget.location,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
                 ),
               ),
               SizedBox(height: 14.h),
-              Text(
+              const Text(
                 'Route',
                 style: TextStyle(
                   fontSize: 22,
@@ -111,7 +111,7 @@ class _DriverDetailsState extends State<DriverDetails> {
               ),
               Text(
                 widget.route,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w400,
                 ),

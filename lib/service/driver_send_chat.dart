@@ -17,6 +17,6 @@ Future<bool> driverSendChat({
       return false;
     }
   } catch (e) {
-    throw e;
+    rethrow;
   }
 }

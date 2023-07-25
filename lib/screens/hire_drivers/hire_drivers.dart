@@ -47,15 +47,19 @@ class _HireDriversState extends State<HireDrivers> {
       getSnackbar(context, e.toString());
     }
     try {
-      _withoutVehicle = await getDriverListing(
-        context: context,
-        endPoint: ApiConstants.driverWithoutVehicle,
-      );
+      if (mounted) {
+        _withoutVehicle = await getDriverListing(
+          context: context,
+          endPoint: ApiConstants.driverWithoutVehicle,
+        );
+      }
       if (mounted) {
         setState(() {});
       }
     } catch (e) {
-      getSnackbar(context, e.toString());
+      if (mounted) {
+        getSnackbar(context, e.toString());
+      }
     }
   }
 
@@ -105,7 +109,7 @@ class _HireDriversState extends State<HireDrivers> {
                 child: TabBarView(
                   children: [
                     _withVehicle == null
-                        ? Center(
+                        ? const Center(
                             child: CircularProgressIndicator.adaptive(),
                           )
                         : Padding(
@@ -197,7 +201,7 @@ class _HireDriversState extends State<HireDrivers> {
                             ),
                           ),
                     _withoutVehicle == null
-                        ? Center(
+                        ? const Center(
                             child: CircularProgressIndicator.adaptive(),
                           )
                         : Padding(

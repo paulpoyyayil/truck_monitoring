@@ -9,7 +9,7 @@ class ChatsModel {
     if (json['data'] != null) {
       data = <ChatsModelData>[];
       json['data'].forEach((v) {
-        data!.add(new ChatsModelData.fromJson(v));
+        data!.add(ChatsModelData.fromJson(v));
       });
     }
     message = json['message'];
@@ -17,12 +17,12 @@ class ChatsModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['message'] = this.message;
-    data['success'] = this.success;
+    data['message'] = message;
+    data['success'] = success;
     return data;
   }
 }
@@ -62,16 +62,16 @@ class ChatsModelData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['driver_id'] = this.driverId;
-    data['username'] = this.userName;
-    data['drivername'] = this.driverName;
-    data['chat'] = this.chat;
-    data['date'] = this.date;
-    data['replay'] = this.replay;
-    data['chat_status'] = this.chatStatus;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['user_id'] = userId;
+    data['driver_id'] = driverId;
+    data['username'] = userName;
+    data['drivername'] = driverName;
+    data['chat'] = chat;
+    data['date'] = date;
+    data['replay'] = replay;
+    data['chat_status'] = chatStatus;
     return data;
   }
 }

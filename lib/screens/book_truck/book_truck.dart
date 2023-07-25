@@ -49,7 +49,7 @@ class _BookTruckState extends State<BookTruck> {
         onTapped: () => navigationPush(context, Homepage(selectedIndex: 0)),
       ),
       body: _truckListing == null
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator.adaptive(),
             )
           : Padding(

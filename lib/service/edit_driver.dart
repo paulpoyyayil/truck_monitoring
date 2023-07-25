@@ -30,6 +30,6 @@ Future<bool> updateDriver({
       return false;
     }
   } catch (e) {
-    throw e;
+    rethrow;
   }
 }

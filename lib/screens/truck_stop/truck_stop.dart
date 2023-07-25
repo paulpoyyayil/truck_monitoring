@@ -49,7 +49,7 @@ class _TruckStopState extends State<TruckStop> {
         onTapped: () => navigationPush(context, Homepage(selectedIndex: 0)),
       ),
       body: _allDriverModel == null
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator.adaptive(),
             )
           : Padding(

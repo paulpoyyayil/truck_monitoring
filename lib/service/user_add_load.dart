@@ -33,7 +33,7 @@ Future<bool> userAddLoad({
       }
     }
   } catch (e) {
-    throw e;
+    rethrow;
   }
   throw 'Unexpected error occurred.';
 }

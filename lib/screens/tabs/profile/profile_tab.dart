@@ -23,7 +23,7 @@ class ProfileTab extends StatefulWidget {
 }
 
 class _ProfileTabState extends State<ProfileTab> {
-  var _userModel;
+  dynamic _userModel;
   List<TextEditingController> controllers =
       List.generate(3, (index) => TextEditingController());
 
@@ -69,7 +69,7 @@ class _ProfileTabState extends State<ProfileTab> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomSheet: _userModel == null
-          ? SizedBox.shrink()
+          ? const SizedBox.shrink()
           : Padding(
               padding: EdgeInsets.symmetric(horizontal: 24.w),
               child: Column(
@@ -130,20 +130,21 @@ class _ProfileTabState extends State<ProfileTab> {
                                     setState(() {
                                       isLoading = false;
                                     });
+                                    if (mounted) {}
+                                    showDialog(
+                                      context: context,
+                                      barrierDismissible: false,
+                                      builder: (BuildContext context) {
+                                        return const AlertDialog(
+                                          content: SingleChildScrollView(
+                                            child: Center(
+                                                child: CircularProgressIndicator
+                                                    .adaptive()),
+                                          ),
+                                        );
+                                      },
+                                    );
                                   }
-                                  showDialog(
-                                    context: context,
-                                    barrierDismissible: false,
-                                    builder: (BuildContext context) {
-                                      return AlertDialog(
-                                        content: SingleChildScrollView(
-                                          child: Center(
-                                              child: CircularProgressIndicator
-                                                  .adaptive()),
-                                        ),
-                                      );
-                                    },
-                                  );
                                   _getData().then(
                                       (value) => Navigator.of(context).pop());
                                 } else {
@@ -174,7 +175,7 @@ class _ProfileTabState extends State<ProfileTab> {
               ),
             ),
       body: _userModel == null
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator.adaptive(),
             )
           : Padding(

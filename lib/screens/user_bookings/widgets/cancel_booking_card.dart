@@ -70,22 +70,27 @@ class _CancelBookingCardState extends State<CancelBookingCard> {
                       bookingId: widget.data.id.toString(),
                     );
                     if (status) {
-                      showDialog(
-                        context: context,
-                        barrierDismissible: false,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            content: SingleChildScrollView(
-                              child: Center(
-                                  child: CircularProgressIndicator.adaptive()),
-                            ),
-                          );
-                        },
-                      );
-                      getSnackbar(context, 'Cancelled');
-                      navigationPush(context, Homepage(selectedIndex: 0));
+                      if (mounted) {
+                        showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            return const AlertDialog(
+                              content: SingleChildScrollView(
+                                child: Center(
+                                    child:
+                                        CircularProgressIndicator.adaptive()),
+                              ),
+                            );
+                          },
+                        );
+                        getSnackbar(context, 'Cancelled');
+                        navigationPush(context, Homepage(selectedIndex: 0));
+                      }
                     } else {
-                      getSnackbar(context, 'Unexpected error occurred.');
+                      if (mounted) {
+                        getSnackbar(context, 'Unexpected error occurred.');
+                      }
                     }
                   } catch (e) {
                     if (mounted) {

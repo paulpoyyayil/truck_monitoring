@@ -85,7 +85,7 @@ class _HomeTabState extends State<HomeTab> {
           children: [
             GridView.builder(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemCount:
                   role == 'user' ? userWidgets.length : driverWidgets.length,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

@@ -45,7 +45,7 @@ class _DriverLoadsState extends State<DriverLoads> {
         onTapped: () => navigationPush(context, Homepage(selectedIndex: 0)),
       ),
       body: _loadsModel == null
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator.adaptive(),
             )
           : _loadsModel!.data!.isEmpty

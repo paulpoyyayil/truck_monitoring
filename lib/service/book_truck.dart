@@ -20,7 +20,6 @@ Future<BookTruckModel> bookTruck({
   int userId = await Services().getUserID();
   int loginId = await Services().getLoginID();
   var url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.truckBooking}');
-  print(url);
   try {
     var response = await http.post(url, body: {
       'username': loginId.toString(),

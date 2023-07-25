@@ -9,7 +9,7 @@ class AllDriverModel {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
     message = json['message'];
@@ -17,12 +17,12 @@ class AllDriverModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['message'] = this.message;
-    data['success'] = this.success;
+    data['message'] = message;
+    data['success'] = success;
     return data;
   }
 }
@@ -71,19 +71,19 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['mobile'] = this.mobile;
-    data['location'] = this.location;
-    data['vehicle_status'] = this.vehicleStatus;
-    data['licence_no'] = this.licenceNo;
-    data['role'] = this.role;
-    data['status'] = this.status;
-    data['transport_from'] = this.transportFrom;
-    data['transport_to'] = this.transportTo;
-    data['login_id'] = this.loginId;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['email'] = email;
+    data['mobile'] = mobile;
+    data['location'] = location;
+    data['vehicle_status'] = vehicleStatus;
+    data['licence_no'] = licenceNo;
+    data['role'] = role;
+    data['status'] = status;
+    data['transport_from'] = transportFrom;
+    data['transport_to'] = transportTo;
+    data['login_id'] = loginId;
     return data;
   }
 }

@@ -26,7 +26,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(milliseconds: 1000))
+    Future.delayed(const Duration(milliseconds: 1000))
         .then((value) => _askPermission());
   }
 

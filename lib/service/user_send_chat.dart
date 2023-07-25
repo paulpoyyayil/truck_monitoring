@@ -16,7 +16,7 @@ Future<bool> userSendChat({
     var url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.userSendChat}');
 
     var response = await http.post(url, body: {
-      'sender_type':role,
+      'sender_type': role,
       'user': userId.toString(),
       'driver': driverId,
       'chat': chat,

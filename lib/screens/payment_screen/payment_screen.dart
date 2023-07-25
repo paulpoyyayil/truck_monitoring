@@ -47,7 +47,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           onTapped: () => navigationPush(context, Homepage(selectedIndex: 0)),
         ),
         body: _paymentsModel == null
-            ? Center(
+            ? const Center(
                 child: CircularProgressIndicator.adaptive(),
               )
             : Padding(
@@ -63,7 +63,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       amount: _paymentsModel!.data![index].amount,
                       paymentDate: _paymentsModel!.data![index].paymentDate,
                       paymentId: _paymentsModel!.data![index].id.toString(),
-                      truckId: _paymentsModel!.data![index].truck_id.toString(),
+                      truckId: _paymentsModel!.data![index].truckId.toString(),
                     );
                   },
                   separatorBuilder: (context, index) => SizedBox(height: 14.h),

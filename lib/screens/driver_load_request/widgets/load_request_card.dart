@@ -68,7 +68,7 @@ class _LoadRequestCardState extends State<LoadRequestCard> {
             ],
           ),
         ),
-        Container(
+        SizedBox(
           width: MediaQuery.sizeOf(context).width,
           child: CustomButton(
             onTap: () {
@@ -189,32 +189,36 @@ class _RequestLoadWidgetState extends State<RequestLoadWidget> {
                             isLoading = false;
                           });
                         }
-                        Navigator.of(context).pop();
-                        getSnackbar(context, 'Requested Successfully');
-                        navigationPush(context, DriverLoadRequest());
+                        if (mounted) {
+                          Navigator.of(context).pop();
+                          getSnackbar(context, 'Requested Successfully');
+                          navigationPush(context, const DriverLoadRequest());
+                        }
                       } else {
                         if (mounted) {
                           setState(() {
                             isLoading = false;
                           });
                         }
-                        Alert(
-                            context: context,
-                            type: AlertType.error,
-                            closeIcon: const SizedBox.shrink(),
-                            title: 'Unexpected error occurred.',
-                            buttons: [
-                              DialogButton(
-                                color: AppColors.kPrimaryColor,
-                                onPressed: () => Navigator.of(context).pop(),
-                                child: const Text(
-                                  'Ok',
-                                  style: TextStyle(
-                                    color: Colors.white,
+                        if (mounted) {
+                          Alert(
+                              context: context,
+                              type: AlertType.error,
+                              closeIcon: const SizedBox.shrink(),
+                              title: 'Unexpected error occurred.',
+                              buttons: [
+                                DialogButton(
+                                  color: AppColors.kPrimaryColor,
+                                  onPressed: () => Navigator.of(context).pop(),
+                                  child: const Text(
+                                    'Ok',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ]).show();
+                              ]).show();
+                        }
                       }
                     } catch (e) {
                       if (mounted) {

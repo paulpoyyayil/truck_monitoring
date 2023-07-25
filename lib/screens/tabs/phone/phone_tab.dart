@@ -25,7 +25,7 @@ class PhoneTab extends StatefulWidget {
 }
 
 class _PhoneTabState extends State<PhoneTab> {
-  var _allDriverModel;
+  dynamic _allDriverModel;
   @override
   void initState() {
     super.initState();
@@ -93,7 +93,7 @@ class _PhoneTabState extends State<PhoneTab> {
                 child: TabBarView(
                   children: [
                     _allDriverModel == null
-                        ? Center(
+                        ? const Center(
                             child: CircularProgressIndicator.adaptive(),
                           )
                         : Padding(
@@ -154,7 +154,7 @@ class _PhoneTabState extends State<PhoneTab> {
                             ),
                           ),
                     _allDriverModel == null
-                        ? Center(
+                        ? const Center(
                             child: CircularProgressIndicator.adaptive(),
                           )
                         : Padding(
@@ -240,7 +240,7 @@ class _PhoneTabState extends State<PhoneTab> {
                 child: TabBarView(
                   children: [
                     _allDriverModel == null
-                        ? Center(
+                        ? const Center(
                             child: CircularProgressIndicator.adaptive(),
                           )
                         : Padding(
@@ -407,17 +407,20 @@ class _ChatModalState extends State<ChatModal> {
                           setState(() {
                             isLoading = false;
                           });
+                          if (mounted) {}
+                          getSnackbar(context, 'Message Sent');
+                          Navigator.pop(context);
                         }
-                        getSnackbar(context, 'Message Sent');
-                        Navigator.pop(context);
                       } else {
                         if (mounted) {
                           setState(() {
                             isLoading = false;
                           });
                         }
-                        getSnackbar(context, 'Unexpected error occurred.');
-                        Navigator.pop(context);
+                        if (mounted) {
+                          getSnackbar(context, 'Unexpected error occurred.');
+                          Navigator.pop(context);
+                        }
                       }
                     } catch (e) {
                       if (mounted) {
