@@ -33,10 +33,13 @@ Future<BookTruckModel> bookTruck({
       'user': userId.toString(),
       'driver': driverId,
       'truck': truckId,
-      'load': '1',
+      'load': '9',
     });
+
     if (response.statusCode == 201) {
       return BookTruckModel.fromJson(jsonDecode(response.body));
+    } else if (response.statusCode == 400) {
+      throw jsonDecode(response.body)['message'];
     } else {
       if (context.mounted) {
         handleNetworkException(response, context);

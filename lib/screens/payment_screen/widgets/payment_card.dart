@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:intl/intl.dart';
 import 'package:recase/recase.dart';
 import 'package:truck_monitor/config/colors.dart';
 import 'package:truck_monitor/screens/confirm_payment/confirm_payment.dart';
@@ -19,8 +20,16 @@ class PaymentCard extends StatefulWidget {
     required this.to,
     required this.amount,
     required this.paymentDate,
+    required this.paymentId,
+    required this.truckId,
   });
-  final String truckName, driverName, from, to, loadQuantity;
+  final String truckName,
+      driverName,
+      from,
+      to,
+      loadQuantity,
+      truckId,
+      paymentId;
   final String? paymentDate, amount;
 
   @override
@@ -38,14 +47,18 @@ class _PaymentCardState extends State<PaymentCard> {
   }
 
   calculateAmount() async {
-    List<Location> from = await locationFromAddress(widget.from);
-    List<Location> to = await locationFromAddress(widget.to);
-    double fromLat = from.first.latitude;
-    double fromLong = from.first.longitude;
-    double toLat = to.first.latitude;
-    double toLong = to.first.longitude;
-    double distance = calculateDistance(fromLat, fromLong, toLat, toLong);
-    amount = (distance * 10) + (int.parse(widget.loadQuantity) * 20);
+    try {
+      List<Location> from = await locationFromAddress(widget.from);
+      List<Location> to = await locationFromAddress(widget.to);
+      double fromLat = from.first.latitude;
+      double fromLong = from.first.longitude;
+      double toLat = to.first.latitude;
+      double toLong = to.first.longitude;
+      double distance = calculateDistance(fromLat, fromLong, toLat, toLong);
+      amount = (distance * 10) + (int.parse(widget.loadQuantity) * 20);
+    } catch (_) {
+      amount = int.parse(widget.loadQuantity) * 20;
+    }
     if (mounted) {
       setState(() {});
     }
@@ -89,12 +102,16 @@ class _PaymentCardState extends State<PaymentCard> {
               SeparatedRowText(title: 'To', text: widget.to.toUpperCase()),
               SeparatedRowText(
                   title: 'Load Quantity', text: widget.loadQuantity),
+              if (widget.paymentDate != null)
+                SeparatedRowText(title: '', text: ''),
               SeparatedRowText(
                   title: 'Amount',
                   text: '₹${widget.amount ?? amount.toStringAsFixed(2)}'),
               if (widget.paymentDate != null)
                 SeparatedRowText(
-                    title: 'Payment Date', text: '₹${widget.paymentDate}'),
+                    title: 'Payment Date',
+                    text:
+                        '${DateFormat('dd-MM-yyyy').format(DateTime.parse(widget.paymentDate!)).toString()}'),
             ],
           ),
         ),
@@ -108,6 +125,8 @@ class _PaymentCardState extends State<PaymentCard> {
                     context,
                     ConfirmPaymentScreen(
                       paymentAmount: amount.toStringAsFixed(2),
+                      paymentId: widget.paymentId,
+                      truckId: widget.truckId,
                     ),
                   );
                 }

@@ -46,12 +46,6 @@ class _LoadRequestCardState extends State<LoadRequestCard> {
                     title: 'Quantity: ',
                     text: widget.data.loadQuantity!.toUpperCase(),
                   ),
-                  // RowText(
-                  //   title: 'Amount: ',
-                  //   text: widget.data
-                  //           .amount ??
-                  //       '',
-                  // ),
                 ],
               ),
             ],

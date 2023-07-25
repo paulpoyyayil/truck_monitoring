@@ -84,6 +84,7 @@ class _DriverBookingsState extends State<DriverBookings> {
                               .toUpperCase(),
                           ending: _bookingsModel!.data![index].ending!
                               .toUpperCase(),
+                          status: _bookingsModel!.data![index].status!,
                           date: _bookingsModel!.data![index].date!,
                         );
                       },
@@ -108,8 +109,17 @@ class BookingsCard extends StatefulWidget {
     required this.starting,
     required this.ending,
     required this.date,
+    required this.status,
   });
-  final String id, name, truck, driver, quantity, starting, ending, date;
+  final String id,
+      name,
+      truck,
+      driver,
+      quantity,
+      starting,
+      ending,
+      date,
+      status;
 
   @override
   State<BookingsCard> createState() => _BookingsCardState();
@@ -138,44 +148,47 @@ class _BookingsCardState extends State<BookingsCard> {
           ),
           StatusButton(
             onTap: () async {
-              if (!isLoading) {
-                if (mounted) {
-                  setState(() {
-                    isLoading = true;
-                  });
-                }
-                try {
-                  bool status = await driverAcceptBooking(
-                    context: context,
-                    bookingId: widget.id,
-                  );
-                  if (status) {
-                    if (mounted) {
-                      setState(() {
-                        isLoading = false;
-                      });
-                    }
-                    getSnackbar(context, 'Booking Accepted');
-                    navigationPush(context, DriverBookings());
-                  } else {
-                    if (mounted) {
-                      setState(() {
-                        isLoading = false;
-                      });
-                    }
-                    getSnackbar(context, 'Unexpected error occurred.');
-                  }
-                } catch (e) {
+              if (widget.status == '0') {
+                if (!isLoading) {
                   if (mounted) {
                     setState(() {
-                      isLoading = false;
+                      isLoading = true;
                     });
                   }
-                  getSnackbar(context, e.toString());
+                  try {
+                    bool status = await driverAcceptBooking(
+                      context: context,
+                      bookingId: widget.id,
+                    );
+                    if (status) {
+                      if (mounted) {
+                        setState(() {
+                          isLoading = false;
+                        });
+                      }
+                      getSnackbar(context, 'Booking Accepted');
+                      navigationPush(context, DriverBookings());
+                    } else {
+                      if (mounted) {
+                        setState(() {
+                          isLoading = false;
+                        });
+                      }
+                      getSnackbar(context, 'Unexpected error occurred.');
+                    }
+                  } catch (e) {
+                    if (mounted) {
+                      setState(() {
+                        isLoading = false;
+                      });
+                    }
+                    getSnackbar(context, e.toString());
+                  }
                 }
               }
             },
-            buttonText: 'Accept',
+            buttonText: widget.status == '0' ? 'Accept' : 'Accepted',
+            backgroundColor: widget.status == '0' ? null : Colors.grey,
             status: isLoading,
           ),
         ],

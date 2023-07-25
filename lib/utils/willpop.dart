@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:truck_monitor/config/colors.dart';
 import 'package:truck_monitor/screens/payment_screen/payment_screen.dart';
-import 'package:truck_monitor/utils/custom_navigator.dart';
 import 'package:truck_monitor/utils/navigation.dart';
 
 class WillPopService {
@@ -35,9 +34,7 @@ class WillPopService {
 
   Future<bool> backFunction(BuildContext context, Widget screen) async {
     bool? result = await Navigator.push<bool?>(
-      context,
-      CustomPageRoute(screen),
-    );
+        context, MaterialPageRoute(builder: ((context) => screen)));
     return result ?? false;
   }
 

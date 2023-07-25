@@ -50,21 +50,33 @@ class _DriverLoadRequestState extends State<DriverLoadRequest> {
             ? Center(
                 child: CircularProgressIndicator.adaptive(),
               )
-            : Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
-                child: ListView.separated(
-                  itemBuilder: (context, index) => LoadRequestCard(
-                    customerName: _loadsModel!.data![index].username!,
-                    description: _loadsModel!.data![index].loadDescription!,
-                    from: _loadsModel!.data![index].loadFrom!,
-                    to: _loadsModel!.data![index].loadTo!,
-                    quantity: _loadsModel!.data![index].loadQuantity!,
-                    userId: _loadsModel!.data![index].user.toString(),
+            : _loadsModel!.data!.isEmpty
+                ? Center(
+                    child: Text(
+                      'No Load Requests',
+                      style: TextStyle(
+                        fontSize: 22.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  )
+                : Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
+                    child: ListView.separated(
+                      itemBuilder: (context, index) => LoadRequestCard(
+                        customerName: _loadsModel!.data![index].username!,
+                        description: _loadsModel!.data![index].loadDescription!,
+                        from: _loadsModel!.data![index].loadFrom!,
+                        to: _loadsModel!.data![index].loadTo!,
+                        quantity: _loadsModel!.data![index].loadQuantity!,
+                        userId: _loadsModel!.data![index].user.toString(),
+                      ),
+                      separatorBuilder: (context, index) =>
+                          SizedBox(height: 14.h),
+                      itemCount: _loadsModel!.data!.length,
+                    ),
                   ),
-                  separatorBuilder: (context, index) => SizedBox(height: 14.h),
-                  itemCount: 2,
-                ),
-              ),
       ),
     );
   }

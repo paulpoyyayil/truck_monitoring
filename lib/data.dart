@@ -52,10 +52,6 @@ List<TilesWidgetClass> driverWidgets = [
     label: 'Load Request',
   ),
   TilesWidgetClass(
-    icon: Remix.chat_2_line,
-    label: 'Messages',
-  ),
-  TilesWidgetClass(
     icon: Remix.download_2_line,
     label: 'Accepted Loads',
   ),

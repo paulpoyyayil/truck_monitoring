@@ -1,25 +1,25 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:truck_monitor/main.dart';
 import 'package:truck_monitor/models/push_notification.dart';
 import 'package:truck_monitor/screens/homepage/homepage.dart';
-import 'package:truck_monitor/utils/custom_navigator.dart';
 
 class PushNotificationService {
   Future<void> setupInteractedMessage() async {
-    await Firebase.initializeApp();
-    FirebaseMessaging.onMessageOpenedApp.listen(
-      (RemoteMessage message) {
-        navigatorKey.currentState!.push(
-          CustomPageRoute(
-            Homepage(selectedIndex: 0),
-          ),
-        );
-      },
-    );
-    await enableIOSNotifications();
-    await registerNotificationListeners();
+    try {
+      FirebaseMessaging.onMessageOpenedApp.listen(
+        (RemoteMessage message) {
+          navigatorKey.currentState!.push(MaterialPageRoute(
+            builder: ((context) => Homepage(selectedIndex: 0)),
+          ));
+        },
+      );
+      await enableIOSNotifications();
+      await registerNotificationListeners();
+    } catch (e) {
+      print('Error setting up notifications: $e');
+    }
   }
 
   registerNotificationListeners() async {
@@ -30,7 +30,8 @@ class PushNotificationService {
         .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
-    var androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
+    var androidSettings =
+        AndroidInitializationSettings('@drawable/ic_firebase_icon');
     var iOSSettings = DarwinInitializationSettings();
     var initSetttings = InitializationSettings(
       android: androidSettings,
@@ -63,8 +64,12 @@ class PushNotificationService {
                 channel.id,
                 channel.name,
                 channelDescription: channel.description,
-                icon: '@mipmap/launcher_icon',
+                icon: '@drawable/ic_firebase_icon',
+                priority: Priority.high,
+                importance: Importance.high,
                 enableVibration: true,
+                groupKey: 'com.truck.monitoring',
+                styleInformation: BigTextStyleInformation(''),
               ),
               iOS: DarwinNotificationDetails(
                 presentAlert: true,
@@ -98,8 +103,6 @@ class PushNotificationService {
 
 Future<void> onTapNotification(NotificationResponse? response) async {
   navigatorKey.currentState!.push(
-    CustomPageRoute(
-      Homepage(selectedIndex: 0),
-    ),
+    MaterialPageRoute(builder: ((context) => Homepage(selectedIndex: 0))),
   );
 }

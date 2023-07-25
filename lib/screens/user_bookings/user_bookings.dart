@@ -123,7 +123,7 @@ class _UserBookingsState extends State<UserBookings> {
                       : _loadModel!.data!.isEmpty
                           ? Center(
                               child: Text(
-                                'No Load Requests',
+                                'No Loads',
                                 style: TextStyle(
                                   fontSize: 22.sp,
                                   fontWeight: FontWeight.w600,

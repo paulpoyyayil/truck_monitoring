@@ -12,7 +12,6 @@ import 'package:truck_monitor/utils/navigation.dart';
 import 'package:truck_monitor/utils/shared_pref.dart';
 import 'package:remixicon/remixicon.dart';
 import 'package:truck_monitor/utils/snackbar.dart';
-import 'package:truck_monitor/widgets/big_button.dart';
 import 'package:truck_monitor/widgets/status_button.dart';
 import 'package:truck_monitor/widgets/textfield.dart';
 
@@ -27,7 +26,9 @@ class _ProfileTabState extends State<ProfileTab> {
   var _userModel;
   List<TextEditingController> controllers =
       List.generate(3, (index) => TextEditingController());
+
   bool isLoading = false;
+  bool isLoggingOut = false;
 
   @override
   void initState() {
@@ -77,14 +78,26 @@ class _ProfileTabState extends State<ProfileTab> {
                   Row(
                     children: [
                       Expanded(
-                        child: CustomBigButton(
+                        child: StatusButton(
                           onTap: () async {
-                            await Services().logout();
+                            if (mounted) {
+                              setState(() {
+                                isLoggingOut = true;
+                              });
+                            }
+                            await Services().logout().then((value) {
+                              if (mounted) {
+                                setState(() {
+                                  isLoggingOut = false;
+                                });
+                              }
+                            });
                             if (context.mounted) {
                               navigationReplacement(
                                   context, const LoginScreen());
                             }
                           },
+                          status: isLoggingOut,
                           buttonText: 'LOGOUT',
                         ),
                       ),

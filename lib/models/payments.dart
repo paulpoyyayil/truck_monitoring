@@ -41,7 +41,7 @@ class PaymentsModelData {
   String? status;
   int? user;
   int? driver;
-  int? truck;
+  int? truck_id;
   int? load;
 
   PaymentsModelData(
@@ -58,7 +58,7 @@ class PaymentsModelData {
       this.status,
       this.user,
       this.driver,
-      this.truck,
+      this.truck_id,
       this.load});
 
   PaymentsModelData.fromJson(Map<String, dynamic> json) {
@@ -75,7 +75,7 @@ class PaymentsModelData {
     status = json['status'];
     user = json['user'];
     driver = json['driver'];
-    truck = json['truck'];
+    truck_id = json['truck_id'];
     load = json['load'];
   }
 
@@ -94,7 +94,7 @@ class PaymentsModelData {
     data['status'] = this.status;
     data['user'] = this.user;
     data['driver'] = this.driver;
-    data['truck'] = this.truck;
+    data['truck_id'] = this.truck_id;
     data['load'] = this.load;
     return data;
   }

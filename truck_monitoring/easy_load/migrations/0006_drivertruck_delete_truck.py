@@ -5,7 +5,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("easy_load", "0005_driver_transport_from_driver_transport_to"),
     ]

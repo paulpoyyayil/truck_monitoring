@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "253085857862",
+    "project_id": "truck-monitor-e291e",
+    "storage_bucket": "truck-monitor-e291e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:253085857862:android:a776be9138adc6c3817247",
+        "android_client_info": {
+          "package_name": "com.truck.monitoring"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "253085857862-d11m1u7r9jd196uremirf3thghmbbs0o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBr2Naw-iol0h79mjzBDqLO7AiZ_vP_jOs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "253085857862-d11m1u7r9jd196uremirf3thghmbbs0o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

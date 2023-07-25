@@ -10,10 +10,12 @@ Future<PaymentsModel> getPayment({required BuildContext context}) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   int userId = prefs.getInt('user_id')!;
   var url =
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.payments}/$userId');
+      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.paymentsList}/$userId');
+
   try {
-    var response = await http.post(url);
-    if (response.statusCode == 201) {
+    var response = await http.get(url);
+
+    if (response.statusCode == 200) {
       return PaymentsModel.fromJson(jsonDecode(response.body));
     } else {
       if (context.mounted) {
@@ -26,32 +28,29 @@ Future<PaymentsModel> getPayment({required BuildContext context}) async {
   throw 'Unexpected error occurred.';
 }
 
-Future<PaymentsModel> postPayments({
+Future<bool> postPayments({
   required BuildContext context,
   required String amount,
-  required String payment_date,
+  required String paymentDate,
+  required String truckId,
+  required String paymentId,
 }) async {
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  int userId = prefs.getInt('user_id')!;
-  var url =
-      Uri.parse('${ApiConstants.baseUrl}${ApiConstants.payments}/$userId');
+  var url = Uri.parse(
+      '${ApiConstants.baseUrl}${ApiConstants.payment}/$truckId/$paymentId');
   try {
-    var response = await http.post(
+    var response = await http.put(
       url,
       body: {
         'amount': amount,
-        'payment_date': payment_date,
+        'payment_date': paymentDate,
       },
     );
-    if (response.statusCode == 201) {
-      return PaymentsModel.fromJson(jsonDecode(response.body));
+    if (response.statusCode == 200) {
+      return true;
     } else {
-      if (context.mounted) {
-        handleNetworkException(response, context);
-      }
+      return false;
     }
   } catch (e) {
     throw e;
   }
-  throw 'Unexpected error occurred.';
 }

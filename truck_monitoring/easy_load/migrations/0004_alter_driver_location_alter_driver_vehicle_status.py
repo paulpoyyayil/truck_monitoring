@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("easy_load", "0003_driver_vehicle_status_truck"),
     ]

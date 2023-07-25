@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:remixicon/remixicon.dart';
@@ -8,16 +9,18 @@ import 'package:truck_monitor/screens/truck_stop/truck_stop.dart';
 import 'package:truck_monitor/screens/add_vehicle/add_vehicle.dart';
 import 'package:truck_monitor/screens/book_truck/book_truck.dart';
 import 'package:truck_monitor/screens/driver_bookings/driver_bookings.dart';
-import 'package:truck_monitor/screens/driver_messages/driver_messages.dart';
 import 'package:truck_monitor/screens/hire_drivers/hire_drivers.dart';
 import 'package:truck_monitor/screens/driver_load_request/driver_load_request.dart';
 import 'package:truck_monitor/screens/payment_screen/payment_screen.dart';
 import 'package:truck_monitor/screens/user_load_request/user_load_request.dart';
 import 'package:truck_monitor/screens/user_messages/user_messages.dart';
+import 'package:truck_monitor/service/set_token.dart';
 import 'package:truck_monitor/utils/logout_and_navigate.dart';
 import 'package:truck_monitor/screens/user_bookings/user_bookings.dart';
 import 'package:truck_monitor/utils/navigation.dart';
 import 'package:truck_monitor/widgets/tile_widget.dart';
+
+bool isDeviceTokenSet = false;
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -52,8 +55,6 @@ class _HomeTabState extends State<HomeTab> {
         case 2:
           return navigationPush(context, const DriverLoadRequest());
         case 3:
-          return navigationPush(context, const DriverMessages());
-        case 4:
           return navigationPush(context, const DriverLoads());
       }
     }
@@ -63,6 +64,16 @@ class _HomeTabState extends State<HomeTab> {
   void initState() {
     super.initState();
     logoutAndNavigate(context);
+    if (!isDeviceTokenSet) {
+      putToken();
+    }
+  }
+
+  putToken() async {
+    try {
+      String? deviceToken = await FirebaseMessaging.instance.getToken();
+      await setToken(token: deviceToken!);
+    } catch (_) {}
   }
 
   @override

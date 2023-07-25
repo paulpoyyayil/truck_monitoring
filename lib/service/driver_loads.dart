@@ -12,7 +12,6 @@ Future<DriverLoadsModel> getAllDriverLoads(
   int userId = prefs.getInt('user_id')!;
   var url =
       Uri.parse('${ApiConstants.baseUrl}${ApiConstants.driverLoads}/$userId');
-
   try {
     var response = await http.get(url);
     if (response.statusCode == 200) {

@@ -4,12 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:truck_monitor/config/colors.dart';
 import 'package:truck_monitor/screens/tabs/home/home_tab.dart';
-// import 'package:truck_monitor/screens/tabs/notification/notification_tab.dart';
+import 'package:truck_monitor/screens/tabs/message_tab/message_tab.dart';
 import 'package:truck_monitor/screens/tabs/phone/phone_tab.dart';
 import 'package:truck_monitor/screens/tabs/profile/profile_tab.dart';
 import 'package:truck_monitor/utils/willpop.dart';
 import 'package:truck_monitor/widgets/app_bar.dart';
 import 'package:remixicon/remixicon.dart';
+import 'package:truck_monitor/data.dart';
 
 class Homepage extends StatefulWidget {
   Homepage({
@@ -34,10 +35,8 @@ class _HomepageState extends State<Homepage> {
     switch (pos) {
       case 0:
         return const HomeTab();
-      // case 1:
-      //   return const NotificationTab();
       case 1:
-        return const PhoneTab();
+        return role == 'user' ? PhoneTab() : MessageTab();
       case 2:
         return const ProfileTab();
       default:
@@ -71,15 +70,21 @@ class _HomepageState extends State<Homepage> {
           selectedIconTheme: const IconThemeData(size: 28.0),
           iconSize: 24.0,
           onTap: _onItemTapped,
-          items: const [
+          items: [
             BottomNavigationBarItem(
               icon: Icon(Remix.home_line),
               label: '',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Remix.phone_line),
-              label: '',
-            ),
+            if (role == 'user')
+              BottomNavigationBarItem(
+                icon: Icon(Remix.phone_line),
+                label: '',
+              ),
+            if (role == 'driver')
+              BottomNavigationBarItem(
+                icon: Icon(Remix.message_line),
+                label: '',
+              ),
             BottomNavigationBarItem(
               icon: Icon(Remix.user_3_line),
               label: '',

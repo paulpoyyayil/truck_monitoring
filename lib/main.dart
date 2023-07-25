@@ -1,10 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:truck_monitor/config/colors.dart';
 import 'package:truck_monitor/data.dart';
-import 'package:truck_monitor/utils/custom_navigator.dart';
+import 'package:truck_monitor/firebase_options.dart';
 import 'package:truck_monitor/utils/push_notification.dart';
 import 'package:truck_monitor/screens/homepage/homepage.dart';
 import 'package:truck_monitor/screens/login/login.dart';
@@ -14,21 +15,23 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
   isLoggedIn = prefs.getBool('login') ?? false;
   role = prefs.getString('role');
 
-  // await PushNotificationService().setupInteractedMessage();
+  await PushNotificationService().setupInteractedMessage();
   runApp(const MyApp());
 
-  // RemoteMessage? initialMessage =
-  //     await FirebaseMessaging.instance.getInitialMessage();
-  // if (initialMessage != null) {
-  //   navigatorKey.currentState!
-  //       .push(CustomPageRoute(Homepage(selectedIndex: 0)));
-  // }
+  RemoteMessage? initialMessage =
+      await FirebaseMessaging.instance.getInitialMessage();
+  if (initialMessage != null) {
+    navigatorKey.currentState!.push(
+        MaterialPageRoute(builder: ((context) => Homepage(selectedIndex: 0))));
+  }
 }
 
 class MyApp extends StatelessWidget {

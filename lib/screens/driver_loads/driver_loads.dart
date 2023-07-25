@@ -48,40 +48,52 @@ class _DriverLoadsState extends State<DriverLoads> {
           ? Center(
               child: CircularProgressIndicator.adaptive(),
             )
-          : Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
-              child: ListView.separated(
-                itemBuilder: (context, index) {
-                  return CardOutline(
-                    child: Column(
-                      children: [
-                        SeparatedRowText(
-                            title: 'Customer:',
-                            text:
-                                _loadsModel!.data![index].username!.titleCase),
-                        SeparatedRowText(
-                            title: 'Driver Name:',
-                            text: _loadsModel!
-                                .data![index].drivername!.titleCase),
-                        SeparatedRowText(
-                            title: 'From:',
-                            text: _loadsModel!.data![index].loadFrom!
-                                .toUpperCase()),
-                        SeparatedRowText(
-                            title: 'To:',
-                            text: _loadsModel!.data![index].loadTo!
-                                .toUpperCase()),
-                        SeparatedRowText(
-                            title: 'Quantity:',
-                            text: _loadsModel!.data![index].loadQuantity!),
-                      ],
+          : _loadsModel!.data!.isEmpty
+              ? Center(
+                  child: Text(
+                    'No Accepted Loads',
+                    style: TextStyle(
+                      fontSize: 22.sp,
+                      fontWeight: FontWeight.w600,
                     ),
-                  );
-                },
-                separatorBuilder: (context, index) => SizedBox(height: 14.h),
-                itemCount: _loadsModel!.data!.length,
-              ),
-            ),
+                  ),
+                )
+              : Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.h),
+                  child: ListView.separated(
+                    itemBuilder: (context, index) {
+                      return CardOutline(
+                        child: Column(
+                          children: [
+                            SeparatedRowText(
+                                title: 'Customer:',
+                                text: _loadsModel!
+                                    .data![index].username!.titleCase),
+                            SeparatedRowText(
+                                title: 'Driver Name:',
+                                text: _loadsModel!
+                                    .data![index].drivername!.titleCase),
+                            SeparatedRowText(
+                                title: 'From:',
+                                text: _loadsModel!.data![index].loadFrom!
+                                    .toUpperCase()),
+                            SeparatedRowText(
+                                title: 'To:',
+                                text: _loadsModel!.data![index].loadTo!
+                                    .toUpperCase()),
+                            SeparatedRowText(
+                                title: 'Quantity:',
+                                text: _loadsModel!.data![index].loadQuantity!),
+                          ],
+                        ),
+                      );
+                    },
+                    separatorBuilder: (context, index) =>
+                        SizedBox(height: 14.h),
+                    itemCount: _loadsModel!.data!.length,
+                  ),
+                ),
     );
   }
 }

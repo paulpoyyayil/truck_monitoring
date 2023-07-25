@@ -1,5 +1,7 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:truck_monitor/data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:truck_monitor/service/set_token.dart';
 
 class Services {
   getUserName() async {
@@ -45,7 +47,12 @@ class Services {
     prefs.setString('vehicle_status', data['vehicle_status']);
   }
 
-  logout() async {
+  Future logout() async {
+    try {
+      await FirebaseMessaging.instance.deleteToken();
+      await setToken(token: "");
+    } catch (_) {}
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('login');
     prefs.remove('login_id');

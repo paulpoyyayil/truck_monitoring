@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "truck-monitor-e291e",
+  "private_key_id": "1f0940732b523cc653af69ea907ebb14f5400236",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDcRWmeVJcpXl53\nFqbhQo/nupXK5r72/U9TafAesVk+oh02G+GgF+aawXApWp2AGwhWtl1DYNlGusCD\nguwO4hfENJFaIuIwwluX99/FTiREzo8KuEUgICD74O1lRiRp7aGdvaAUdUZU3/ji\nEyg80vDagChdKQWU2kSHd1HGwUDJoaRrfTvdpO40EaDKKsVuXJE9k6QYePIGjRdD\nJX9wPOAkBW3xOs3c4P0gP/PfUfuxwlAey/iLQiOgRzdfivw3UGmJmV6lgW0+kkRH\nAsOlVjZMWVByoTeq0SEdjnRj8vnAQUzm4LLCjycsHBaIOFvjDc80XxCnIG8LvqW0\nJoSzHTXfAgMBAAECggEAM1B6W/fB5VHGOQEObHDIvIfDqKqbt0doyPpnhYb0TvqO\nSpIxPE4FG21P91pUUck6ZpUCYhV4WJleCuUfoBH8zmkeqXxx7EEC/IKy3zCmk175\nhNpLxEGn3XXXaB3wkrrYyTopRkrR0SkCPoyO9aiAkq6DeLx7P+OfTl22L9LKiI4Q\nbtGvsv8yit90mbVaoofaUOCoZdkf+bg/a3u97Q2wzhmSE0klg6IkC45mUuv0ACBR\nZuzghB18KF7v08yW3IblpuyuVwK0rvYjxXGVzme4aJ8I8/pJjXZ3liY/M7FAOa4q\nboVxFoHpIbT3dRS2sVM2JwKtt+VclN8ZTK77BwN9SQKBgQDue42eLbY9bRSHMVPu\no2n5bfdmxINS2oOm+H75a5WKKK4RT0FNc3EVm5s6VcqN+breAqXiXh2CRkGe/dYX\nZSAAhW47aBrIF8U5e0zagVR95oiNgefjyOdA13hcsA0RjzD55EeUIhQy7Hl+8Nu/\nURjHhfQQQz3T8BkO3brTlmvjKQKBgQDsc2i6dRrWzh1trxt/LOVh91md+gAr7Bb3\nwObNxTYZE6xWWws0BazpEwBt02+nQ5siefE6RNGozqoVHt9HnTLykHMMtZUQJsdc\nx50BriWBbXqu/JMa9eRTPTo2bAys1/7xVeKX93752voxI+FQhRTJzhP/r0eQcsBw\nka92jz+5xwKBgB3GAxo6bsQgeC2gtO/YKwTe+8IyyopviXwxDfkpu1OyXHkAwhBf\nV0DxWmHgEBfFk9Tf08H9KgX3q32kBzSIhYRLJEX6a02L2i2g/SlSeC/3thiknUTM\n8kIgJIC94gPNMrogC+eskYUCDPESNP0frM5MJPpayr9I/Hfkqsx7vSBxAoGACFwI\nLtdnDIMa/T68nSFsNqt1CqXFDch6A2ZZgprfT8GnTSJI4hz1QQQ/9qIMB4DXYj+n\nbKT0OKCd2MNPp4uCOpsqxh9BVuHYGIqiHWYXw1yogrlBRim9WcgHX9cwF4hHZibg\nLPk+Dv1T7RrUo3EhDAVyJY7/27aC4Tf1WR61ZQ8CgYEAxr2dJPMj1CL7g0RcnW97\ngBZvE+eE442uVNfJUHBi0m/LDk7Xw6GbBQOG7PswrTLsvD2ju0L6JEP4I/fASKZj\nUp/SQMsr5ebOmHLYfxvYlPQrqUUituyNsuVYzxyOEXBl4OefRhtHSJFGG4WruT5J\nbtAJ1gtXFRNzbXj4dYLFMbE=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-5d14e@truck-monitor-e291e.iam.gserviceaccount.com",
+  "client_id": "100597384084146048040",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-5d14e%40truck-monitor-e291e.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

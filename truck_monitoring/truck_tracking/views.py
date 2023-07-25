@@ -506,7 +506,8 @@ def send_single_notification(fcm_token, title, body):
 
 
 def send_notification_to_all_drivers(tokens):
-    tokens = [token for token in tokens if isinstance(token, str) and token.strip()]
+    tokens = [token for token in tokens if isinstance(
+        token, str) and token.strip()]
 
     if not tokens:
         print("No valid FCM tokens found. Skipping notification.")
@@ -659,7 +660,8 @@ class TruckBookingAPIView(GenericAPIView):
 
         booking_status = "0"
 
-        booking = TruckBooking.objects.filter(truck=trucks, user=users)
+        booking = TruckBooking.objects.filter(
+            truck=trucks, user=users, status='0')
         if booking.exists():
             return Response(
                 {"message": "Already Booked", "success": False},
@@ -1005,7 +1007,7 @@ class LoadRequestAPIView(GenericAPIView):
                 serializer.save()
 
             user_fcm_token = user.objects.get(id=users).fcm_token
-            driver_name = user.objects.get(id=drivers).name
+            driver_name = driver.objects.get(id=drivers).name
             send_single_notification(
                 user_fcm_token,
                 "New load request",
@@ -1034,7 +1036,8 @@ class User_Accept_Load_Request_APIView(GenericAPIView):
         user.save()
         serializer = serializer_class(user)
 
-        driver_fcm_token = driver.objects.get(driver_name=user.drivername).fcm_token
+        driver_fcm_token = driver.objects.get(
+            driver_name=user.drivername).fcm_token
         user_name = user.objects.get(user_name=user.username).name
         send_single_notification(
             driver_fcm_token,
@@ -1078,33 +1081,44 @@ class Drivers_View_load_Request_APIView(GenericAPIView):
         )
 
 
+class PaymentListAPIView(GenericAPIView):
+    def get(self, request, id):
+
+        queryset = TruckBooking.objects.filter(user=id).values()
+        return Response(
+            {
+                "data": queryset,
+                "message": "All Payments",
+                "success": True,
+            },
+            status=status.HTTP_200_OK,
+        )
+
+
 class PaymentAPIView(GenericAPIView):
     serializer_class = UserTruckBookingSerializer
 
-    def post(self, request, id):
-        amount = request.data.get("amount")
-        payment_date = request.data.get("payment_date")
+    def put(self, request, id, pid):
+        queryset = TruckBooking.objects.get(pk=pid)
+        print(queryset)
+        serializer = UserTruckBookingSerializer(
+            instance=queryset, data=request.data, partial=True
+        )
+        print(serializer)
+        if serializer.is_valid():
+            serializer.save()
+            Drivertruck.objects.filter(pk=id).update(status="0")
 
-        data = TruckBooking.objects.filter(user=id)
-
-        if data:
-            data.update(amount=amount, payment_date=payment_date)
-
-            truck_ids = data.values_list("truck_id", flat=True)
-
-            Drivertruck.objects.filter(id__in=truck_ids).update(status="0")
-
-            serializer = self.serializer_class(data, many=True)
             return Response(
                 {
                     "data": serializer.data,
-                    "message": "Payment successful",
+                    "message": "Payment Successfully",
                     "success": True,
                 },
-                status=status.HTTP_201_CREATED,
+                status=status.HTTP_200_OK,
             )
         else:
             return Response(
-                {"message": "Invalid request", "success": False},
+                {"data": "Something Went Wrong", "success": False},
                 status=status.HTTP_400_BAD_REQUEST,
             )

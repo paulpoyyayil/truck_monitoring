@@ -62,6 +62,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
                       to: _paymentsModel!.data![index].ending!,
                       amount: _paymentsModel!.data![index].amount,
                       paymentDate: _paymentsModel!.data![index].paymentDate,
+                      paymentId: _paymentsModel!.data![index].id.toString(),
+                      truckId: _paymentsModel!.data![index].truck_id.toString(),
                     );
                   },
                   separatorBuilder: (context, index) => SizedBox(height: 14.h),

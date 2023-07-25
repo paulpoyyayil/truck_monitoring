@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:truck_monitor/config/constants.dart';
 import 'package:truck_monitor/config/network_exceptions.dart';
+import 'package:truck_monitor/data.dart';
 
 Future<bool> userSendChat({
   required BuildContext context,
@@ -15,6 +16,7 @@ Future<bool> userSendChat({
     var url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.userSendChat}');
 
     var response = await http.post(url, body: {
+      'sender_type':role,
       'user': userId.toString(),
       'driver': driverId,
       'chat': chat,

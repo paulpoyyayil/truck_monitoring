@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "easy_load",
     "truck_tracking",
-    'rest_framework',
-    'corsheaders',
+    "rest_framework",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -58,9 +58,9 @@ MIDDLEWARE = [
 CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ORIGIN_WHITELIST = [
-'http://localhost:3000',
-'http://localhost:8000',
-'http://localhost:8080',
+    "http://localhost:3000",
+    "http://localhost:8000",
+    "http://localhost:8080",
 ]
 
 ROOT_URLCONF = "truck_monitoring.urls"
@@ -131,8 +131,8 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

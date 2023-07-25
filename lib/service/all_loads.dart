@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:truck_monitor/config/constants.dart';
-import 'package:truck_monitor/config/network_exceptions.dart';
 import 'package:truck_monitor/models/all_loads.dart';
 
 Future<AllLoadsModel> getAllLoads({required BuildContext context}) async {
@@ -10,16 +9,17 @@ Future<AllLoadsModel> getAllLoads({required BuildContext context}) async {
 
   try {
     var response = await http.get(url);
-
     if (response.statusCode == 200) {
-      return AllLoadsModel.fromJson(jsonDecode(response.body));
-    } else {
-      if (context.mounted) {
-        handleNetworkException(response, context);
+      var body = jsonDecode(response.body);
+      if (body['success']) {
+        return AllLoadsModel.fromJson(body);
+      } else {
+        return AllLoadsModel(data: []);
       }
+    } else {
+      return AllLoadsModel(data: []);
     }
   } catch (e) {
     throw e.toString();
   }
-  throw 'Unexpected error occurred.';
 }

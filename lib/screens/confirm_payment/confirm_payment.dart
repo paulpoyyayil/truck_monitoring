@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:truck_monitor/config/colors.dart';
-import 'package:truck_monitor/models/payments.dart';
 import 'package:truck_monitor/screens/payment_screen/payment_screen.dart';
 import 'package:truck_monitor/service/payments.dart';
 import 'package:truck_monitor/utils/navigation.dart';
@@ -13,8 +12,13 @@ import 'package:truck_monitor/widgets/status_button.dart';
 import 'package:truck_monitor/widgets/textfield.dart';
 
 class ConfirmPaymentScreen extends StatefulWidget {
-  const ConfirmPaymentScreen({super.key, required this.paymentAmount});
-  final String paymentAmount;
+  const ConfirmPaymentScreen({
+    super.key,
+    required this.paymentAmount,
+    required this.paymentId,
+    required this.truckId,
+  });
+  final String paymentAmount, truckId, paymentId;
 
   @override
   State<ConfirmPaymentScreen> createState() => _ConfirmPaymentScreenState();
@@ -47,19 +51,21 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
         });
       }
       try {
-        PaymentsModel status = await postPayments(
+        bool status = await postPayments(
           context: context,
           amount: widget.paymentAmount,
-          payment_date: DateTime.now().toString(),
+          paymentDate: DateTime.now().toString(),
+          truckId: widget.truckId,
+          paymentId: widget.paymentId,
         );
-        if (status.success!) {
+        if (status) {
           if (mounted) {
             setState(() {
               isLoading = false;
               ;
             });
           }
-          getSnackbar(context, status.message!);
+          getSnackbar(context, 'Payment Success');
           navigationPush(context, PaymentScreen());
         } else {
           if (mounted) {
@@ -68,7 +74,7 @@ class _ConfirmPaymentScreenState extends State<ConfirmPaymentScreen> {
               ;
             });
           }
-          getSnackbar(context, status.message!);
+          getSnackbar(context, 'Payment Failed');
         }
       } catch (e) {
         if (mounted) {

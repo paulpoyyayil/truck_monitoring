@@ -39,10 +39,8 @@ appbarTitle(index) {
   switch (index) {
     case 0:
       return const Text('Homepage');
-    // case 1:
-    //   return const Text('Hire Driver');
     case 1:
-      return const Text('Communication');
+      return const Text('Messages');
     case 2:
       return const Text('Profile');
   }
